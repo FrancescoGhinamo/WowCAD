@@ -3,7 +3,7 @@ package wowcad.backend.beam.shapes;
 import wowcad.backend.beam.shapes.exceptions.ScalingException;
 
 /**
- * Geometrical Point
+ * Geometric Point
  * @author franc
  *
  */
