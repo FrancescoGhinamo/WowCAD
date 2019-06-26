@@ -69,7 +69,7 @@ public class Point extends Primitive {
 		return x;
 	}
 
-	void setX(double x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
@@ -77,7 +77,7 @@ public class Point extends Primitive {
 		return y;
 	}
 
-	void setY(double y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 

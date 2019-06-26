@@ -83,6 +83,15 @@ public class Segment extends Primitive {
 		return p2;
 	}
 
+	public void setP1(Point p1) {
+		this.p1 = p1;
+	}
+
+	public void setP2(Point p2) {
+		this.p2 = p2;
+	}
+
+	
 	
 	
 }
