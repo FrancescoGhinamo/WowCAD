@@ -1,5 +1,6 @@
 package wowcad.backend.beam.drawing;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import wowcad.backend.beam.drawing.exceptions.LocationNotSpecifiedException;
@@ -13,8 +14,11 @@ import wowcad.backend.service.SerializationType;
  * @author franc
  *
  */
-public class Drawing {
+public class Drawing implements Serializable {
 	
+	
+	private static final long serialVersionUID = 2484661260610998267L;
+
 	/**
 	 * Name assigned to this drawing
 	 */

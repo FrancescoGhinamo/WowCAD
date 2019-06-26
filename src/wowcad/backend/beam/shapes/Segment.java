@@ -1,5 +1,7 @@
 package wowcad.backend.beam.shapes;
 
+import java.io.Serializable;
+
 import wowcad.backend.beam.shapes.exceptions.ScalingException;
 
 /**
@@ -7,7 +9,10 @@ import wowcad.backend.beam.shapes.exceptions.ScalingException;
  * @author franc
  *
  */
-public class Segment extends Primitive {
+public class Segment extends Primitive implements Serializable {
+	
+
+	private static final long serialVersionUID = -6848463404727608751L;
 	
 	/**
 	 * First extreme of the segment

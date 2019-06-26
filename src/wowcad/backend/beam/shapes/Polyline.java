@@ -1,5 +1,6 @@
 package wowcad.backend.beam.shapes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import wowcad.backend.beam.shapes.exceptions.ScalingException;
@@ -9,7 +10,10 @@ import wowcad.backend.beam.shapes.exceptions.ScalingException;
  * @author franc
  *
  */
-public class Polyline extends Primitive {
+public class Polyline extends Primitive implements Serializable {
+	
+
+	private static final long serialVersionUID = -7754045267412342837L;
 	
 	/**
 	 * Points that are part of the polyline

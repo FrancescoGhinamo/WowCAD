@@ -1,5 +1,7 @@
 package wowcad.backend.beam.shapes;
 
+import java.io.Serializable;
+
 import wowcad.backend.beam.shapes.exceptions.ScalingException;
 
 /**
@@ -7,8 +9,11 @@ import wowcad.backend.beam.shapes.exceptions.ScalingException;
  * @author franc
  *
  */
-public class Ellipse extends Primitive {
+public class Ellipse extends Primitive implements Serializable {
 	
+
+	private static final long serialVersionUID = -5877835259695106195L;
+
 	/**
 	 * Center of the ellipse
 	 */

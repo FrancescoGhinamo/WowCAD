@@ -1,5 +1,7 @@
 package wowcad.backend.beam.shapes;
 
+import java.io.Serializable;
+
 import wowcad.backend.beam.shapes.exceptions.ScalingException;
 
 /**
@@ -7,8 +9,11 @@ import wowcad.backend.beam.shapes.exceptions.ScalingException;
  * @author franc
  *
  */
-public abstract class Primitive {
+public abstract class Primitive implements Serializable {
 
+
+	private static final long serialVersionUID = 2118409659123500683L;
+	
 	/**
 	 * Name assigned to the Primitive
 	 */

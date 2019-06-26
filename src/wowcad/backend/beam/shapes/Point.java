@@ -1,5 +1,7 @@
 package wowcad.backend.beam.shapes;
 
+import java.io.Serializable;
+
 import wowcad.backend.beam.shapes.exceptions.ScalingException;
 
 /**
@@ -7,10 +9,13 @@ import wowcad.backend.beam.shapes.exceptions.ScalingException;
  * @author franc
  *
  */
-public class Point extends Primitive {
+public class Point extends Primitive implements Serializable {
 	
 	
 
+
+	private static final long serialVersionUID = -3436361261680210362L;
+	
 	/**
 	 * x coordinate
 	 */
