@@ -16,7 +16,7 @@ public class SerializationServiceFactory {
 		ISerializationService service = null;
 		
 		switch(sType) {
-		case FILE_SERIALIZATION:
+		case ON_FILE_SERIALIZATION:
 			service = new FileSerializationServiceImpl();
 			break;
 		default:
