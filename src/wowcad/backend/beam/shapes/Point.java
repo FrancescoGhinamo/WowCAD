@@ -14,44 +14,44 @@ public class Point extends Primitive {
 	/**
 	 * x coordinate
 	 */
-	private double xCoord;
+	private double x;
 	/**
 	 * y coordinate
 	 */
-	private double yCoord;
+	private double y;
 	
 	
 
 	/**
 	 * Constructor
 	 * @param name: name assigned to the object
-	 * @param xCoord: x coordinate
-	 * @param yCoord: y coordinate
+	 * @param x: x coordinate
+	 * @param y: y coordinate
 	 */
-	public Point(String name, double xCoord, double yCoord) {
+	public Point(String name, double x, double y) {
 		super(name);
-		this.xCoord = xCoord;
-		this.yCoord = yCoord;
+		this.x = x;
+		this.y = y;
 	}
 
 	
 	@Override
 	public void translate(double deltaX, double deltaY) {
-		this.xCoord = this.xCoord + deltaX;
-		this.yCoord = this.yCoord + deltaY;
+		this.x = this.x + deltaX;
+		this.y = this.y + deltaY;
 
 	}
 
 	@Override
 	public void rotate(Point center, double degAngle) {
-		double a = center.getxCoord();
-		double b = center.getyCoord();
+		double a = center.getX();
+		double b = center.getY();
 		double radAng = Math.toRadians(degAngle);
-		double newX = (this.getxCoord() - a) * Math.cos(radAng) - (this.getyCoord() - b) * Math.sin(radAng) + a;
-		double newY= (this.getxCoord() - a) * Math.sin(radAng) + (this.getyCoord() - b) * Math.cos(radAng) + b;
+		double newX = (this.getX() - a) * Math.cos(radAng) - (this.getY() - b) * Math.sin(radAng) + a;
+		double newY= (this.getX() - a) * Math.sin(radAng) + (this.getY() - b) * Math.cos(radAng) + b;
 		
-		this.setxCoord(newX);
-		this.setyCoord(newY);
+		this.setX(newX);
+		this.setY(newY);
 		
 
 	}
@@ -65,20 +65,20 @@ public class Point extends Primitive {
 	
 	
 	
-	public double getxCoord() {
-		return xCoord;
+	public double getX() {
+		return x;
 	}
 
-	void setxCoord(double xCoord) {
-		this.xCoord = xCoord;
+	void setX(double x) {
+		this.x = x;
 	}
 
-	public double getyCoord() {
-		return yCoord;
+	public double getY() {
+		return y;
 	}
 
-	void setyCoord(double yCoord) {
-		this.yCoord = yCoord;
+	void setY(double y) {
+		this.y = y;
 	}
 
 	

@@ -50,23 +50,23 @@ public class Segment extends Primitive {
 	public void scale(double scaleFactor) throws ScalingException {
 		if(scaleFactor > 0) {
 			//find the middle point of the segment
-			Point m = new Point("", (p1.getxCoord() + p2.getxCoord()) / 2, (p1.getyCoord() + p2.getyCoord()) / 2);
+			Point m = new Point("", (p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
 			
-			double dX = p1.getxCoord() - m.getxCoord();
-			double dY = p1.getyCoord() - m.getyCoord();
-			
-			dX *= scaleFactor;
-			dY *= scaleFactor;
-			p1.setxCoord(m.getxCoord() + dX);
-			p1.setyCoord(m.getyCoord() + dY);
-			
-			dX = p2.getxCoord() - m.getxCoord();
-			dY = p2.getyCoord() - m.getyCoord();
+			double dX = p1.getX() - m.getX();
+			double dY = p1.getY() - m.getY();
 			
 			dX *= scaleFactor;
 			dY *= scaleFactor;
-			p2.setxCoord(m.getxCoord() + dX);
-			p2.setyCoord(m.getyCoord() + dY);
+			p1.setX(m.getX() + dX);
+			p1.setY(m.getY() + dY);
+			
+			dX = p2.getX() - m.getX();
+			dY = p2.getY() - m.getY();
+			
+			dX *= scaleFactor;
+			dY *= scaleFactor;
+			p2.setX(m.getX() + dX);
+			p2.setY(m.getY() + dY);
 		}
 		else {
 			throw new ScalingException();
