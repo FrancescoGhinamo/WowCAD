@@ -12,15 +12,15 @@ import java.io.ObjectOutputStream;
  * @author franc
  *
  */
-public class FileSerializationService implements ISerializationService {
+public class FileSerializationServiceImpl implements ISerializationService {
 
 	
-	FileSerializationService() {
+	FileSerializationServiceImpl() {
 		
 	}
 	
 	@Override
-	public void serialize(Object what, String destination) {
+	public void serialize(Object what, String destination) throws Exception {
 		File dest = new File(destination);
 		ObjectOutputStream oos = null;
 		try {
@@ -29,8 +29,7 @@ public class FileSerializationService implements ISerializationService {
 			oos.writeObject(what);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}
 		finally {
 			if(oos != null) {
@@ -54,7 +53,7 @@ public class FileSerializationService implements ISerializationService {
 	}
 
 	@Override
-	public Object deserialize(String source) {
+	public Object deserialize(String source) throws Exception {
 		Object res = null;
 		File s = new File(source);
 		ObjectInputStream ois = null;
@@ -65,8 +64,7 @@ public class FileSerializationService implements ISerializationService {
 			res = ois.readObject();
 			
 		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}
 		finally {
 			if(ois != null) {

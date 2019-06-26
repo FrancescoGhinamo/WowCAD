@@ -17,7 +17,7 @@ public class SerializationServiceFactory {
 		
 		switch(sType) {
 		case FILE_SERIALIZATION:
-			service = new FileSerializationService();
+			service = new FileSerializationServiceImpl();
 			break;
 		default:
 			break;
