@@ -18,9 +18,9 @@ public class Polygon extends Polyline implements Serializable {
 	 */
 	public Polygon(String name) {
 		super(name);
-		
+
 	}
-	
-	
+
+
 
 }

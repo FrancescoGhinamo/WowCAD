@@ -19,7 +19,7 @@ public class Circle extends Ellipse implements Serializable {
 	public double getRadius() {
 		return super.getMajorRadius();
 	}
-	
+
 	public void setRadius(double radius) {
 		super.setMajorRadius(radius);
 		super.setMinorRadius(radius);

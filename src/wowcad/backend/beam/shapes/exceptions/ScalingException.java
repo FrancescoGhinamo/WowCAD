@@ -7,7 +7,7 @@ package wowcad.backend.beam.shapes.exceptions;
  */
 public class ScalingException extends Exception {
 
-	
+
 	private static final long serialVersionUID = -6234028812230453116L;
 
 	/**

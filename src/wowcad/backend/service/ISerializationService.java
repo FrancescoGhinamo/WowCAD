@@ -15,7 +15,7 @@ public interface ISerializationService {
 	 * @throws Exception
 	 */
 	public void serialize(Object what, String destination) throws Exception;
-	
+
 	/**
 	 * Deserializes an object from a source
 	 * @param source: source: can be a file or host address...

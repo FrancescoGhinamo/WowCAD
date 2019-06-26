@@ -14,17 +14,17 @@ public class SerializationServiceFactory {
 	 */
 	public static ISerializationService getSerializationService(SerializationType sType) {
 		ISerializationService service = null;
-		
+
 		switch(sType) {
 		case ON_FILE_SERIALIZATION:
 			service = new FileSerializationServiceImpl();
 			break;
 		default:
 			break;
-		
+
 		}
-		
+
 		return service;
 	}
-	
+
 }

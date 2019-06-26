@@ -10,7 +10,7 @@ import wowcad.backend.beam.shapes.exceptions.ScalingException;
  *
  */
 public class Ellipse extends Primitive implements Serializable {
-	
+
 
 	private static final long serialVersionUID = -5877835259695106195L;
 
@@ -18,18 +18,18 @@ public class Ellipse extends Primitive implements Serializable {
 	 * Center of the ellipse
 	 */
 	private Point center;
-	
+
 	/**
 	 * Major radius
 	 */
 	private double majorRadius;
-	
+
 	/**
 	 * Minor radius
 	 */
 	private double minorRadius;
-	
-	
+
+
 
 	/**
 	 * Constructor
@@ -90,5 +90,5 @@ public class Ellipse extends Primitive implements Serializable {
 		this.minorRadius = minorRadius;
 	}
 
-	
+
 }

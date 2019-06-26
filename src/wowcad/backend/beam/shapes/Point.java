@@ -10,12 +10,12 @@ import wowcad.backend.beam.shapes.exceptions.ScalingException;
  *
  */
 public class Point extends Primitive implements Serializable {
-	
-	
+
+
 
 
 	private static final long serialVersionUID = -3436361261680210362L;
-	
+
 	/**
 	 * x coordinate
 	 */
@@ -24,8 +24,8 @@ public class Point extends Primitive implements Serializable {
 	 * y coordinate
 	 */
 	private double y;
-	
-	
+
+
 
 	/**
 	 * Constructor
@@ -39,7 +39,7 @@ public class Point extends Primitive implements Serializable {
 		this.y = y;
 	}
 
-	
+
 	@Override
 	public void translate(double deltaX, double deltaY) {
 		this.x = this.x + deltaX;
@@ -54,22 +54,22 @@ public class Point extends Primitive implements Serializable {
 		double radAng = Math.toRadians(degAngle);
 		double newX = (this.getX() - a) * Math.cos(radAng) - (this.getY() - b) * Math.sin(radAng) + a;
 		double newY= (this.getX() - a) * Math.sin(radAng) + (this.getY() - b) * Math.cos(radAng) + b;
-		
+
 		this.setX(newX);
 		this.setY(newY);
-		
+
 
 	}
 
 	@Override
 	public void scale(double scaleFactor) throws ScalingException {
 		//scaling a point makes no sense!
-		
+
 	}
 
-	
-	
-	
+
+
+
 	public double getX() {
 		return x;
 	}
@@ -86,5 +86,5 @@ public class Point extends Primitive implements Serializable {
 		this.y = y;
 	}
 
-	
+
 }

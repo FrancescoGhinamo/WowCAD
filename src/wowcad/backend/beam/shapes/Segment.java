@@ -10,10 +10,10 @@ import wowcad.backend.beam.shapes.exceptions.ScalingException;
  *
  */
 public class Segment extends Primitive implements Serializable {
-	
+
 
 	private static final long serialVersionUID = -6848463404727608751L;
-	
+
 	/**
 	 * First extreme of the segment
 	 */
@@ -22,8 +22,8 @@ public class Segment extends Primitive implements Serializable {
 	 * Last extreme of the segment
 	 */
 	private Point p2;
-	
-	
+
+
 
 	/**
 	 * Constructor
@@ -56,18 +56,18 @@ public class Segment extends Primitive implements Serializable {
 		if(scaleFactor > 0) {
 			//find the middle point of the segment
 			Point m = new Point("", (p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
-			
+
 			double dX = p1.getX() - m.getX();
 			double dY = p1.getY() - m.getY();
-			
+
 			dX *= scaleFactor;
 			dY *= scaleFactor;
 			p1.setX(m.getX() + dX);
 			p1.setY(m.getY() + dY);
-			
+
 			dX = p2.getX() - m.getX();
 			dY = p2.getY() - m.getY();
-			
+
 			dX *= scaleFactor;
 			dY *= scaleFactor;
 			p2.setX(m.getX() + dX);
@@ -76,7 +76,7 @@ public class Segment extends Primitive implements Serializable {
 		else {
 			throw new ScalingException();
 		}
-		
+
 
 	}
 
@@ -96,7 +96,7 @@ public class Segment extends Primitive implements Serializable {
 		this.p2 = p2;
 	}
 
-	
-	
-	
+
+
+
 }

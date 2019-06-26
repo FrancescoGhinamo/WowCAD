@@ -7,7 +7,7 @@ package wowcad.backend.beam.drawing.exceptions;
  */
 public class LocationNotSpecifiedException extends Exception {
 
-	
+
 	private static final long serialVersionUID = 3501391171660639250L;
 
 	/**

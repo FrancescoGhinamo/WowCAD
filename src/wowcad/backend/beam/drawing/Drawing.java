@@ -15,15 +15,15 @@ import wowcad.backend.service.SerializationType;
  *
  */
 public class Drawing implements Serializable {
-	
-	
+
+
 	private static final long serialVersionUID = 2484661260610998267L;
 
 	/**
 	 * Name assigned to this drawing
 	 */
 	private String name;
-	
+
 	/**
 	 * Description of the drawing
 	 */
@@ -33,25 +33,25 @@ public class Drawing implements Serializable {
 	 * Primitives composing the drawing
 	 */
 	private Hashtable<String, Primitive> primitives;
-	
-	
+
+
 	/**
 	 * Location where the drawing is saved
 	 */
 	private String saveLocation;
-	
+
 	/**
 	 * Reference to the serialization service
 	 */
 	private transient ISerializationService serService;
-	
+
 	/**
 	 * True if the drawing has been modified and not saveds
 	 */
 	private boolean modified;
-	
-	
-	
+
+
+
 
 	/**
 	 * Constructor
@@ -70,7 +70,7 @@ public class Drawing implements Serializable {
 		default:
 			this.serService = SerializationServiceFactory.getSerializationService(SerializationType.ON_FILE_SERIALIZATION);
 			break;
-		
+
 		}
 	}
 
@@ -95,7 +95,7 @@ public class Drawing implements Serializable {
 		this(name);
 		this.description = description;
 	}
-	
+
 	/**
 	 * Retrieves the drawing from a saved instance
 	 * @param sType: way it was saved
@@ -111,7 +111,7 @@ public class Drawing implements Serializable {
 			this.serService = SerializationServiceFactory.getSerializationService(SerializationType.ON_FILE_SERIALIZATION);
 			break;		
 		}
-		
+
 		try {
 			Drawing _t = (Drawing) serService.deserialize(saveLocation);
 			this.name = _t.name;
@@ -123,7 +123,7 @@ public class Drawing implements Serializable {
 			throw e;
 		}
 	}
-	
+
 	/**
 	 * Saves the drawing to the specified save location
 	 * @throws Exception
@@ -140,9 +140,9 @@ public class Drawing implements Serializable {
 		else {
 			throw new LocationNotSpecifiedException();
 		}
-		
+
 	}
-	
+
 
 	/**
 	 * Adds a primitive to the drawing
@@ -152,7 +152,7 @@ public class Drawing implements Serializable {
 		primitives.put(pr.getName(), pr);
 		modified = true;
 	}
-	
+
 	/**
 	 * Removes a primitive from the drawing
 	 * @param name: name of the primitive to remove
@@ -161,10 +161,10 @@ public class Drawing implements Serializable {
 		primitives.remove(name);
 		modified = true;
 	}
-	
-	
-	
-	
+
+
+
+
 	public String getName() {
 		return name;
 	}
@@ -196,11 +196,11 @@ public class Drawing implements Serializable {
 	public boolean isModified() {
 		return modified;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 }

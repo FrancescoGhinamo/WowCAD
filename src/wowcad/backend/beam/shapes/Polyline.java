@@ -11,16 +11,16 @@ import wowcad.backend.beam.shapes.exceptions.ScalingException;
  *
  */
 public class Polyline extends Primitive implements Serializable {
-	
+
 
 	private static final long serialVersionUID = -7754045267412342837L;
-	
+
 	/**
 	 * Points that are part of the polyline
 	 */
 	private ArrayList<Point> points;
-	
-	
+
+
 
 	/**
 	 * Constructor
@@ -53,25 +53,25 @@ public class Polyline extends Primitive implements Serializable {
 			Point reference = points.get(0);
 			double dX;
 			double dY;
-			
+
 			for(int i = 1; i < points.size(); i++) {
 				dX = points.get(i).getX() - reference.getX();
 				dY = points.get(i).getY() - reference.getY();
-				
+
 				dX *= scaleFactor;
 				dY *= scaleFactor;
 				points.get(i).setX(reference.getX() + dX);
 				points.get(i).setY(reference.getY() + dY);
 			}
-			
+
 		}
 		catch(IndexOutOfBoundsException e) {
-			
+
 		}
-		
+
 
 	}
-	
+
 	/**
 	 * Adds a point to the polyline
 	 * @param p: point to add
@@ -79,20 +79,20 @@ public class Polyline extends Primitive implements Serializable {
 	public void addPoint(Point p) {
 		points.add(p);
 	}
-	
+
 	/**
 	 * Removes a point from the polyline
 	 * @param index: index of the point to remove
 	 */
 	public void removePoint(int index) {
 		points.remove(index);
-		
+
 	}
 
 	public ArrayList<Point> getPoints() {
 		return points;
 	}
-	
-	
+
+
 
 }

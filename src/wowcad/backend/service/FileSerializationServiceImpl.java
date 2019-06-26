@@ -14,20 +14,20 @@ import java.io.ObjectOutputStream;
  */
 public class FileSerializationServiceImpl implements ISerializationService {
 
-	
+
 	FileSerializationServiceImpl() {
-		
+
 	}
-	
+
 	@Override
 	public void serialize(Object what, String destination) throws Exception {
 		File dest = new File(destination);
 		ObjectOutputStream oos = null;
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream(dest));
-			
+
 			oos.writeObject(what);
-			
+
 		} catch (IOException e) {
 			throw e;
 		}
@@ -57,12 +57,12 @@ public class FileSerializationServiceImpl implements ISerializationService {
 		Object res = null;
 		File s = new File(source);
 		ObjectInputStream ois = null;
-		
+
 		try {
 			ois = new ObjectInputStream(new FileInputStream(s));
-			
+
 			res = ois.readObject();
-			
+
 		} catch (IOException | ClassNotFoundException e) {
 			throw e;
 		}
@@ -76,7 +76,7 @@ public class FileSerializationServiceImpl implements ISerializationService {
 				}
 			}
 		}
-		
+
 		return res;
 	}
 
