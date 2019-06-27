@@ -18,6 +18,8 @@ public abstract class Primitive implements Serializable {
 	 * Name assigned to the Primitive
 	 */
 	private String name;
+	
+	
 
 
 	/**
@@ -49,6 +51,12 @@ public abstract class Primitive implements Serializable {
 	 * @throws ScalingException
 	 */
 	public abstract void scale(double scaleFactor) throws ScalingException;
+	
+	/**
+	 * Returns the "center of gravity" of the polygon
+	 * @return Returns the "center of gravity" of the polygon
+	 */
+	public abstract Point getCenter();
 
 
 	public String getName() {

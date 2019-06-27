@@ -67,6 +67,11 @@ public class Point extends Primitive implements Serializable {
 
 	}
 
+	@Override
+	public Point getCenter() {
+		
+		return new Point("", x, y);
+	}
 
 
 
@@ -85,6 +90,9 @@ public class Point extends Primitive implements Serializable {
 	public void setY(double y) {
 		this.y = y;
 	}
+
+
+	
 
 
 }

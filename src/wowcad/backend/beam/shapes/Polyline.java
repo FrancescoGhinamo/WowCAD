@@ -78,6 +78,21 @@ public class Polyline extends Primitive implements Serializable {
 
 	}
 
+	@Override
+	public Point getCenter() {
+		
+		double sumX = 0;
+		
+		double sumY = 0;
+		
+		for(Point p: points) {
+			sumX += p.getX();
+			sumY += p.getY();
+		}
+		
+		return new Point("", sumX / points.size(), sumY / points.size());
+	}
+	
 	/**
 	 * Adds a point to the polyline
 	 * @param p: point to add
@@ -98,6 +113,8 @@ public class Polyline extends Primitive implements Serializable {
 	public ArrayList<Point> getPoints() {
 		return points;
 	}
+
+	
 
 
 

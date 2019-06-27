@@ -55,7 +55,7 @@ public class Segment extends Primitive implements Serializable {
 	public void scale(double scaleFactor) throws ScalingException {
 		if(scaleFactor > 0) {
 			//find the middle point of the segment
-			Point m = new Point("", (p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
+			Point m = getCenter();
 
 			double dX = p1.getX() - m.getX();
 			double dY = p1.getY() - m.getY();
@@ -79,6 +79,11 @@ public class Segment extends Primitive implements Serializable {
 
 
 	}
+	
+	@Override
+	public Point getCenter() {
+		return new Point("", (p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
+	}
 
 	public Point getP1() {
 		return p1;
@@ -95,6 +100,8 @@ public class Segment extends Primitive implements Serializable {
 	public void setP2(Point p2) {
 		this.p2 = p2;
 	}
+
+	
 
 
 
