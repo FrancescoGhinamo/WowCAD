@@ -1,13 +1,9 @@
 package wowcad.backend.beam.drawing;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Hashtable;
-
-import javax.imageio.ImageIO;
 
 import wowcad.backend.beam.drawing.exceptions.LocationNotSpecifiedException;
 import wowcad.backend.beam.shapes.Primitive;
@@ -172,18 +168,29 @@ public class Drawing implements Serializable {
 	/**
 	 * Exports the drawing as a JPEG picture
 	 * @param expLocation: location where to export the image
+	 * @param axis: true to draw axis on the image
+	 * @param grid: true to draw the grid on the image
+	 * @param redFactor: 1 millimeter of the drawing is represented by redFactor pixel in the image
+	 * @throws IOException 
 	 */
-	public void exportAsJPEG(String expLocation) {
-		BufferedImage img = new BufferedImage(1080, 1920, BufferedImage.TYPE_3BYTE_BGR);
-		Graphics2D g = img.createGraphics();
-		g.fillOval(-50, -50, 20, 30);
+	public void exportAsJPEG(String expLocation, boolean axis, boolean grid, int redFactor) throws IOException {
+		JPEGExporter exp = new JPEGExporter(this,redFactor);
+		if(axis) {
+			exp.drawCartesianAxis();
+		}
+		if(grid) {
+			exp.drawGrid();
+		}
+		exp.drawShapes();
+		
 		try {
-			ImageIO.write(img, "jpeg", new File(expLocation));
+			exp.exportJpegImage(new File(expLocation));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}
 	}
+	
+	
 
 
 	public String getName() {
