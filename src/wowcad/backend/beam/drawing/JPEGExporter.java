@@ -218,6 +218,8 @@ public class JPEGExporter {
 				//disgnare oval
 			}
 			//continuare con le altre primitive, discriminando tra poliliena e poligono e ellisse e cerchio
+			//ricordarsi del riferimento nell'oval e altre robe...
+			//polilinee e poligoni farli come sequenza di segnemti
 		}
 	}
 
