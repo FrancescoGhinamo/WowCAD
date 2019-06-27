@@ -49,25 +49,31 @@ public class Polyline extends Primitive implements Serializable {
 
 	@Override
 	public void scale(double scaleFactor) throws ScalingException {
-		try {
-			Point reference = points.get(0);
-			double dX;
-			double dY;
+		if(scaleFactor > 0) {
+			try {
+				Point reference = points.get(0);
+				double dX;
+				double dY;
 
-			for(int i = 1; i < points.size(); i++) {
-				dX = points.get(i).getX() - reference.getX();
-				dY = points.get(i).getY() - reference.getY();
+				for(int i = 1; i < points.size(); i++) {
+					dX = points.get(i).getX() - reference.getX();
+					dY = points.get(i).getY() - reference.getY();
 
-				dX *= scaleFactor;
-				dY *= scaleFactor;
-				points.get(i).setX(reference.getX() + dX);
-				points.get(i).setY(reference.getY() + dY);
+					dX *= scaleFactor;
+					dY *= scaleFactor;
+					points.get(i).setX(reference.getX() + dX);
+					points.get(i).setY(reference.getY() + dY);
+				}
+
 			}
+			catch(IndexOutOfBoundsException e) {
 
+			}
 		}
-		catch(IndexOutOfBoundsException e) {
+		else {
+			throw new ScalingException();
+		}
 
-		}
 
 
 	}

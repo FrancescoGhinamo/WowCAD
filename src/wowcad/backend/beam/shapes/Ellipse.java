@@ -61,8 +61,14 @@ public class Ellipse extends Primitive implements Serializable {
 
 	@Override
 	public void scale(double scaleFactor) throws ScalingException {
-		this.majorRadius *= scaleFactor;
-		this.minorRadius *= scaleFactor;
+		if(scaleFactor > 0) {
+			this.majorRadius *= scaleFactor;
+			this.minorRadius *= scaleFactor;
+		}
+		else {
+			throw new ScalingException();
+		}
+		
 
 	}
 

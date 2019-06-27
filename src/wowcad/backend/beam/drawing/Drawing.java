@@ -1,7 +1,13 @@
 package wowcad.backend.beam.drawing;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Hashtable;
+
+import javax.imageio.ImageIO;
 
 import wowcad.backend.beam.drawing.exceptions.LocationNotSpecifiedException;
 import wowcad.backend.beam.shapes.Primitive;
@@ -163,6 +169,21 @@ public class Drawing implements Serializable {
 	}
 
 
+	/**
+	 * Exports the drawing as a JPEG picture
+	 * @param expLocation: location where to export the image
+	 */
+	public void exportAsJPEG(String expLocation) {
+		BufferedImage img = new BufferedImage(1080, 1920, BufferedImage.TYPE_3BYTE_BGR);
+		Graphics2D g = img.createGraphics();
+		g.fillOval(-50, -50, 20, 30);
+		try {
+			ImageIO.write(img, "jpeg", new File(expLocation));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
 	public String getName() {
