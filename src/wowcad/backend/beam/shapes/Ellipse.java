@@ -20,14 +20,14 @@ public class Ellipse extends Primitive implements Serializable {
 	private Point center;
 
 	/**
-	 * Major radius
+	 * Radius on x axis
 	 */
-	private double majorRadius;
+	private double xRadius;
 
 	/**
-	 * Minor radius
+	 * Radius in y axis
 	 */
-	private double minorRadius;
+	private double yRadius;
 
 
 
@@ -35,14 +35,14 @@ public class Ellipse extends Primitive implements Serializable {
 	 * Constructor
 	 * @param name: name given to the shape
 	 * @param center: center of the ellipse
-	 * @param majorRadius: major radius
-	 * @param minorRadius:minor radius
+	 * @param xRadius: major radius
+	 * @param yRadius:minor radius
 	 */
-	public Ellipse(String name, Point center, double majorRadius, double minorRadius) {
+	public Ellipse(String name, Point center, double xRadius, double yRadius) {
 		super(name);
 		this.center = center;
-		this.majorRadius = majorRadius;
-		this.minorRadius = minorRadius;
+		this.xRadius = xRadius;
+		this.yRadius = yRadius;
 	}
 
 	@Override
@@ -53,17 +53,17 @@ public class Ellipse extends Primitive implements Serializable {
 
 	@Override
 	public void rotate(Point center, double degAngle) {
-		double rT = this.majorRadius;
-		this.majorRadius = this.minorRadius;
-		this.minorRadius = rT;
+		double rT = this.xRadius;
+		this.xRadius = this.yRadius;
+		this.yRadius = rT;
 
 	}
 
 	@Override
 	public void scale(double scaleFactor) throws ScalingException {
 		if(scaleFactor > 0) {
-			this.majorRadius *= scaleFactor;
-			this.minorRadius *= scaleFactor;
+			this.xRadius *= scaleFactor;
+			this.yRadius *= scaleFactor;
 		}
 		else {
 			throw new ScalingException();
@@ -76,24 +76,24 @@ public class Ellipse extends Primitive implements Serializable {
 		return center;
 	}
 
-	public double getMajorRadius() {
-		return majorRadius;
+	public double getxRadius() {
+		return xRadius;
 	}
 
-	public double getMinorRadius() {
-		return minorRadius;
+	public double getyRadius() {
+		return yRadius;
 	}
 
 	public void setCenter(Point center) {
 		this.center = center;
 	}
 
-	public void setMajorRadius(double majorRadius) {
-		this.majorRadius = majorRadius;
+	public void setxRadius(double xRadius) {
+		this.xRadius = xRadius;
 	}
 
-	public void setMinorRadius(double minorRadius) {
-		this.minorRadius = minorRadius;
+	public void setyRadius(double yRadius) {
+		this.yRadius = yRadius;
 	}
 
 
