@@ -24,4 +24,6 @@ public class Circle extends Ellipse implements Serializable {
 		super.setxRadius(radius);
 		super.setyRadius(radius);
 	}
+	
+
 }
