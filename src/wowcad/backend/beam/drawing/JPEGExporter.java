@@ -12,8 +12,11 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import wowcad.backend.beam.shapes.Circle;
 import wowcad.backend.beam.shapes.Ellipse;
 import wowcad.backend.beam.shapes.Point;
+import wowcad.backend.beam.shapes.Polygon;
+import wowcad.backend.beam.shapes.Polyline;
 import wowcad.backend.beam.shapes.Primitive;
 import wowcad.backend.beam.shapes.Segment;
 
@@ -70,7 +73,7 @@ public class JPEGExporter {
 		for(String k: keys) {
 			Primitive _p = drawing.getPrimitives().get(k);
 			primitives.add(_p);
-			Point _c = _p.getCenter();
+			Point _c = _p.getAbsoluteMax();
 			if(Math.abs(_c.getX() * redFact) > maxX) {
 				maxX = Math.abs(_c.getX() * redFact);
 			}
@@ -211,15 +214,64 @@ public class JPEGExporter {
 				int y2 = (int) ( - (s.getP2().getY() * redFact) + yTranslation);
 				g.drawLine(x1,  y1, x2, y2);
 			}
-			if(prim instanceof Ellipse) {
+			if(prim instanceof Circle) {
+				Circle circle = (Circle) prim;
+				int x = (int) (circle.getCenter().getX() * redFact + xTranslation);
+				int y = (int) ( - (circle.getCenter().getX() * redFact) + yTranslation);
+				x -= circle.getRadius() * redFact;
+				y -= circle.getRadius() * redFact;
+				g.drawOval(x, y, (int) circle.getRadius() * redFact * 2, (int) circle.getRadius() * redFact * 2); 
+				
+			}
+			else if(prim instanceof Ellipse) {
 				Ellipse ellipse = (Ellipse) prim;
 				int x = (int) (ellipse.getCenter().getX() * redFact + xTranslation);
 				int y = (int) ( - (ellipse.getCenter().getX() * redFact) + yTranslation);
-				//disgnare oval
+				x -= ellipse.getxRadius() * redFact;
+				y -= ellipse.getyRadius() * redFact;
+				g.drawOval(x, y, (int) ellipse.getxRadius() * redFact * 2, (int) ellipse.getyRadius() * redFact * 2); 
 			}
-			//continuare con le altre primitive, discriminando tra poliliena e poligono e ellisse e cerchio
-			//ricordarsi del riferimento nell'oval e altre robe...
-			//polilinee e poligoni farli come sequenza di segnemti
+			if(prim instanceof Polygon) {
+				Polygon pg = (Polygon) prim;
+				ArrayList<Point> points = pg.getPoints();
+				Point prev = points.get(0);
+				for(int i = 1; i < points.size(); i++) {
+					Point newP = points.get(i);
+					int x1 = (int) (prev.getX() * redFact + xTranslation);
+					int y1 = (int) ( - (prev.getY() * redFact) + yTranslation);
+					int x2 = (int) (newP.getX() * redFact + xTranslation);
+					int y2 = (int) ( - (newP.getY() * redFact) + yTranslation);
+					g.drawLine(x1,  y1, x2, y2);
+					prev = newP;
+				}
+				prev = points.get(points.size() - 1);
+				Point newP = points.get(0);
+				int x1 = (int) (prev.getX() * redFact + xTranslation);
+				int y1 = (int) ( - (prev.getY() * redFact) + yTranslation);
+				int x2 = (int) (newP.getX() * redFact + xTranslation);
+				int y2 = (int) ( - (newP.getY() * redFact) + yTranslation);
+				g.drawLine(x1,  y1, x2, y2);
+				
+			}
+			else if(prim instanceof Polyline) {
+				Polyline pl = (Polyline) prim;
+				ArrayList<Point> points = pl.getPoints();
+				Point prev = points.get(0);
+				for(int i = 1; i < points.size(); i++) {
+					Point newP = points.get(i);
+					int x1 = (int) (prev.getX() * redFact + xTranslation);
+					int y1 = (int) ( - (prev.getY() * redFact) + yTranslation);
+					int x2 = (int) (newP.getX() * redFact + xTranslation);
+					int y2 = (int) ( - (newP.getY() * redFact) + yTranslation);
+					g.drawLine(x1,  y1, x2, y2);
+					prev = newP;
+				}
+				
+			}
+			
+			
+
+
 		}
 	}
 
