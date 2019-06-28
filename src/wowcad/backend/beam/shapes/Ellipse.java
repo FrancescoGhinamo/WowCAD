@@ -71,6 +71,12 @@ public class Ellipse extends Primitive implements Serializable {
 		
 
 	}
+	
+	@Override
+	public Point getAbsoluteMax() {
+		
+		return new Point("", Math.abs(center.getX()) + xRadius, Math.abs(center.getY()) + yRadius);
+	}
 
 	public Point getCenter() {
 		return center;
@@ -95,6 +101,7 @@ public class Ellipse extends Primitive implements Serializable {
 	public void setyRadius(double yRadius) {
 		this.yRadius = yRadius;
 	}
+
 
 
 }

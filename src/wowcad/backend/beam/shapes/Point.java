@@ -73,6 +73,11 @@ public class Point extends Primitive implements Serializable {
 		return new Point("", x, y);
 	}
 
+	@Override
+	public Point getAbsoluteMax() {
+		// TODO Auto-generated method stub
+		return new Point("", Math.abs(x), Math.abs(y));
+	}
 
 
 	public double getX() {
@@ -90,6 +95,9 @@ public class Point extends Primitive implements Serializable {
 	public void setY(double y) {
 		this.y = y;
 	}
+
+
+	
 
 
 	

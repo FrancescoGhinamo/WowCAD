@@ -84,6 +84,27 @@ public class Segment extends Primitive implements Serializable {
 	public Point getCenter() {
 		return new Point("", (p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
 	}
+	
+	@Override
+	public Point getAbsoluteMax() {
+		double maxX = - Double.MAX_VALUE;
+		double maxY = - Double.MAX_VALUE;		
+
+		if(Math.abs(p1.getX()) > maxX) {
+			maxX = p1.getX();
+		}
+		if(Math.abs(p1.getY()) > maxY) {
+			maxY = p1.getY();
+		}
+		if(Math.abs(p2.getX()) > maxX) {
+			maxX = p2.getX();
+		}
+		if(Math.abs(p2.getY()) > maxY) {
+			maxY = p2.getY();
+		}
+		
+		return new Point("", maxX, maxY);
+	}
 
 	public Point getP1() {
 		return p1;
@@ -100,6 +121,8 @@ public class Segment extends Primitive implements Serializable {
 	public void setP2(Point p2) {
 		this.p2 = p2;
 	}
+
+	
 
 	
 

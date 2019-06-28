@@ -57,6 +57,12 @@ public abstract class Primitive implements Serializable {
 	 * @return Returns the "center of gravity" of the polygon
 	 */
 	public abstract Point getCenter();
+	
+	/**
+	 * Returns the farthest point of the shape from the origin, only positive axis
+	 * @return: Returns the farthest point of the shape from the origin, only positive axis
+	 */
+	public abstract Point getAbsoluteMax();
 
 
 	public String getName() {

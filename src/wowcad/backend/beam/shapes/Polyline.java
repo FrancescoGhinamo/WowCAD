@@ -93,6 +93,23 @@ public class Polyline extends Primitive implements Serializable {
 		return new Point("", sumX / points.size(), sumY / points.size());
 	}
 	
+	@Override
+	public Point getAbsoluteMax() {
+		double maxX = - Double.MAX_VALUE;
+		double maxY = - Double.MAX_VALUE;		
+
+		//determines the dimension of the resulting picture, where a millimeter corresponds to a pixel
+		for(Point p: points) {
+			if(Math.abs(p.getX()) > maxX) {
+				maxX = Math.abs(p.getX());
+			}
+			if(Math.abs(p.getY()) > maxY) {
+				maxY = Math.abs(p.getX());
+			}
+		}
+		return new Point("", maxX, maxY);
+	}
+	
 	/**
 	 * Adds a point to the polyline
 	 * @param p: point to add
@@ -113,6 +130,8 @@ public class Polyline extends Primitive implements Serializable {
 	public ArrayList<Point> getPoints() {
 		return points;
 	}
+
+	
 
 	
 
