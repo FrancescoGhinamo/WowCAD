@@ -126,11 +126,13 @@ public class Drawing implements Serializable {
 		}
 	}
 
+	
 	/**
 	 * Saves the drawing to the specified save location
 	 * @throws Exception
+	 * @throws LocationNotSpecifiedException
 	 */
-	public void saveDrawing() throws Exception {
+	public void saveDrawing() throws Exception, LocationNotSpecifiedException {
 		if(!saveLocation.equals("")) {
 			try {
 				serService.serialize(this, saveLocation);
