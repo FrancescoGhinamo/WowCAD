@@ -1,6 +1,8 @@
 package wowcad.backend.beam.cadManager;
 
+import wowcad.backend.beam.cadManager.exceptions.DrawingNotPresentException;
 import wowcad.backend.beam.cadManager.exceptions.MalformedCommandException;
+import wowcad.backend.beam.cadManager.exceptions.ParameterException;
 import wowcad.backend.beam.cadManager.exceptions.UnsavedException;
 import wowcad.backend.beam.drawing.Drawing;
 import wowcad.backend.beam.drawing.SaveType;
@@ -11,6 +13,10 @@ import wowcad.backend.beam.drawing.SaveType;
  *
  */
 public class CadManager {
+
+	private static final String COMMAND_SPLITTER = ":";
+
+	private static final String PARAMETER_SPLITTER = ",";
 
 	/**
 	 * Drawing the manager operates on
@@ -115,61 +121,310 @@ public class CadManager {
 	 * The order and the type of parameters are the same of the relative methods in this class
 	 * @param command: command line
 	 * @exception MalformedCommandException
+	 * @throws ParameterException 
+	 * @throws DrawingNotPresentException 
 	 */
-	public void parseCommand(String command) throws MalformedCommandException {
-		String cmd = command.toUpperCase();
+	public void parseCommand(String command) throws MalformedCommandException, ParameterException, DrawingNotPresentException {
+		if(drawing != null) {
+			String cmd = command.toUpperCase();
+			cmd = cmd.strip();
+			try {
+				String[] parts = cmd.split(COMMAND_SPLITTER);
+				switch(parts[0]) {
+				case CommandKeys.ADD:
+					/*
+					 * parameters:
+					 * <shape>,<param1>,<param2>,<param3>...
+					 */
+					parseAdd(parts[1]);
+					break;
+
+				case CommandKeys.DESCRIPTION:
+					/*
+					 * parameters:
+					 * <newDescription>
+					 */
+					parseDescription(parts[1]);
+					break;
+
+				case CommandKeys.NAME:
+					/*
+					 * parameters:
+					 * <newNamen>
+					 */
+					parseName(parts[1]);
+					break;
+
+				case CommandKeys.REMOVE:
+					/*
+					 * parameters:
+					 * <primitiveName>
+					 */
+					parseRemove(parts[1]);
+					break;
+
+				case CommandKeys.ROTATE:
+					/*
+					 * parameters:
+					 * <primitiveName>,<rotCenterX>,<rotCenterY>,<rotDegrees>
+					 */
+					parseRotate(parts[1]);
+					break;
+
+				case CommandKeys.SAVE:
+					break;
+
+				case CommandKeys.SAVE_LOC:
+					break;
+
+				case CommandKeys.SAVE_TYPE:
+					break;
+
+				case CommandKeys.SCALE:
+					break;
+
+				case CommandKeys.TRANSLATE:
+					break;
+
+				case CommandKeys.EXPORT:
+					break;
+
+				default:
+					throw new MalformedCommandException();
+				}
+			}
+			catch(ArrayIndexOutOfBoundsException e) {
+				throw new MalformedCommandException();
+			} catch (ParameterException e) {
+				throw e;
+			}
+		}
+		else {
+			throw new DrawingNotPresentException();
+		}
+
+
+	}
+
+	/**
+	 * Parses operations to add a primitive to the drawing
+	 * @param parameters: line of parameters
+	 * @throws MalformedCommandException 
+	 * @throws ParameterException 
+	 */
+	private void parseAdd(String parameters) throws MalformedCommandException, ParameterException {
 		try {
-			String[] parts = cmd.split(":");
+			String[] parts = parameters.split(PARAMETER_SPLITTER);
+
 			switch(parts[0]) {
-			case CommandKeys.ADD:
+			case KeyWords.CIRCLE:
+				/*
+				 * parameters:
+				 * <name>,<centerX>,<centerY>,<radius>
+				 */
+
+				String cName = parts[1];
+				String centerX = parts[2];
+				String centerY = parts[3];
+				String radius = parts[4];
+				try {
+					double xC = Double.parseDouble(centerX);
+					double yC = Double.parseDouble(centerY);
+					double r = Double.parseDouble(radius);
+					drawing.addCircle(cName, xC, yC, r);
+				}
+				catch(Exception e) {
+					throw new ParameterException();
+				}
+
 				break;
 
-			case CommandKeys.DESCRIPTION:
+			case KeyWords.ELLIPSE:
+				/*
+				 * parameters:
+				 * <name>,<centerX>,<centerY>,<radiusX>,<radiusY>
+				 */
+
+				String eName = parts[1];
+				String ecenterX = parts[2];
+				String ecenterY = parts[3];
+				String eradiusX = parts[4];
+				String eradiusY = parts[5];
+				try {
+					double xC = Double.parseDouble(ecenterX);
+					double yC = Double.parseDouble(ecenterY);
+					double rX = Double.parseDouble(eradiusX);
+					double rY = Double.parseDouble(eradiusY);
+					drawing.addEllipse(eName, xC, yC, rX, rY);
+				}
+				catch(Exception e) {
+					throw new ParameterException();
+				}
+
 				break;
 
-			case CommandKeys.NAME:
+			case KeyWords.POINT:
+				/*
+				 * parameters:
+				 * <name>,<x>,<y>
+				 */
+
+				String pName = parts[1];
+				String pX = parts[2];
+				String pY = parts[3];
+
+				try {
+					double x = Double.parseDouble(pX);
+					double y = Double.parseDouble(pY);
+					drawing.addPoint(pName, x, y);
+				}
+				catch(Exception e) {
+					throw new ParameterException();
+				}
+
+
 				break;
 
-			case CommandKeys.REMOVE:
+			case KeyWords.POLYGON:
+				/*
+				 * parameters:
+				 * <name>,<x1>,<y1>,<x2>,<y2>,...,<xn>,<yn>
+				 */
+				String pgName = parts[1];
+				if((parts.length - 2) % 2 == 0) {
+					try {
+						double[] xCoor = new double[(parts.length - 2) / 2];
+						double[] yCoor = new double[(parts.length - 2) / 2];
+						int index = 0;
+						for(int i = 2; i < parts.length; i += 2) {
+							xCoor[index] = Double.parseDouble(parts[i]);
+							yCoor[index] = Double.parseDouble(parts[i + 1]);
+							index++;
+						}
+						drawing.addPolygon(pgName, xCoor, yCoor);
+					}
+					catch(Exception e) {
+						throw new ParameterException();
+					}
+				}
+				else {
+					throw new MalformedCommandException();
+				}
+
 				break;
 
-			case CommandKeys.ROTATE:
+			case KeyWords.POLYLINE:
+				/*
+				 * parameters:
+				 * <name>,<x1>,<y1>,<x2>,<y2>,...,<xn>,<yn>
+				 */
+				String plName = parts[1];
+				if((parts.length - 2) % 2 == 0) {
+					try {
+						double[] xCoor = new double[(parts.length - 2) / 2];
+						double[] yCoor = new double[(parts.length - 2) / 2];
+						int index = 0;
+						for(int i = 2; i < parts.length; i += 2) {
+							xCoor[index] = Double.parseDouble(parts[i]);
+							yCoor[index] = Double.parseDouble(parts[i + 1]);
+							index++;
+						}
+						drawing.addPolyline(plName, xCoor, yCoor);
+					}
+					catch(Exception e) {
+						throw new ParameterException();
+					}
+				}
+				else {
+					throw new MalformedCommandException();
+				}
 				break;
 
-			case CommandKeys.SAVE:
-				break;
+			case KeyWords.SEGMENT:
+				/*
+				 * parameters:
+				 * <name>,<x1>,<y1>,<x2>,<y2>
+				 */
 
-			case CommandKeys.SAVE_LOC:
-				break;
+				String name = parts[1];
+				String x1 = parts[2];
+				String y1 = parts[3];
+				String x2 = parts[4];
+				String y2 = parts[5];
 
-			case CommandKeys.SAVE_TYPE:
-				break;
-
-			case CommandKeys.SCALE:
-				break;
-
-			case CommandKeys.TRANSLATE:
-				break;
-				
-			case CommandKeys.EXPORT:
+				try {
+					double x = Double.parseDouble(x1);
+					double y = Double.parseDouble(y1);
+					double xa = Double.parseDouble(x2);
+					double ya = Double.parseDouble(y2);
+					drawing.addSegment(name, x, y, xa, ya);
+				}
+				catch(Exception e) {
+					throw new ParameterException();
+				}
 				break;
 
 			default:
 				throw new MalformedCommandException();
+
 			}
+
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
 			throw new MalformedCommandException();
 		}
+	}
 
+	/**
+	 * Changes the description of the drawing
+	 * @param des: new description
+	 */
+	private void parseDescription(String des) {
+		drawing.setDescription(des);
 	}
 	
-	/*
-	 * per ogni comando del metodo sopra creare un metodo che separa i vari parametri passati (se sono mancanti o incorretti sollevare Malfrormed...)
-	 * tale metodo richiama un metodo specifico che effettua il comando effettivamente (passando i parametri ricavati dalla stringa cmd)
-	 * gestire le varie eccezioni e passare i parametri con lo stesso ordine con cui verranno passati ai metodi di dovere (quando si tratta di dover aggiungere una serie di punti (come poliliena o poligono) passare tutti i punti nella riga di comando omettendo il relativo nome (che sarà ""))
+	/**
+	 * Changes the description of the drawing
+	 * @param name: new name
 	 */
+	private void parseName(String name) {
+		drawing.setName(name);
+	}
 	
+	/**
+	 * Removes a primitive from the drawing
+	 * @param prName: name of the primitive to remove
+	 */
+	private void parseRemove(String prName) {
+		
+		drawing.removePrimitive(prName);
+		
+	}
+	
+	/**
+	 * Rotates a shape
+	 * @param params: parameters
+	 * @throws MalformedCommandException 
+	 * @throws ParameterException 
+	 */
+	private void parseRotate(String params) throws MalformedCommandException, ParameterException {
+		String[] parts = params.split(PARAMETER_SPLITTER);
+		try {
+			
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			throw new MalformedCommandException();
+		}
+		catch(Exception e) {
+			throw new ParameterException();
+		}
+	}
+	
+	public Drawing getDrawing() {
+		return drawing;
+	}
 
+
+	
 
 }

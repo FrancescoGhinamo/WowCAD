@@ -6,7 +6,13 @@ import java.io.Serializable;
 import java.util.Hashtable;
 
 import wowcad.backend.beam.drawing.exceptions.LocationNotSpecifiedException;
+import wowcad.backend.beam.shapes.Circle;
+import wowcad.backend.beam.shapes.Ellipse;
+import wowcad.backend.beam.shapes.Point;
+import wowcad.backend.beam.shapes.Polygon;
+import wowcad.backend.beam.shapes.Polyline;
 import wowcad.backend.beam.shapes.Primitive;
+import wowcad.backend.beam.shapes.Segment;
 import wowcad.backend.service.ISerializationService;
 import wowcad.backend.service.SerializationServiceFactory;
 import wowcad.backend.service.SerializationType;
@@ -20,6 +26,7 @@ public class Drawing implements Serializable {
 
 
 	private static final long serialVersionUID = 2484661260610998267L;
+	
 
 	/**
 	 * Name assigned to this drawing
@@ -155,6 +162,7 @@ public class Drawing implements Serializable {
 	public void addPrimitive(Primitive pr) {
 		primitives.put(pr.getName(), pr);
 		modified = true;
+		
 	}
 
 	/**
@@ -192,7 +200,116 @@ public class Drawing implements Serializable {
 		}
 	}
 	
+	/**
+	 * Makes and adds the circle to the drawing
+	 * @param name: name of the shape
+	 * @param xC: x of the center
+	 * @param yC: y of the center
+	 * @param radius: radius
+	 */
+	public void addCircle(String name, double xC, double yC, double radius) {
+		Point center = new Point("", xC, yC);
+		Circle c = new Circle(name, center, radius);
+		this.addPrimitive(c);
+	}
 	
+	/**
+	 * Makes and adds the ellipse to the drawing
+	 * @param name: name of the shape
+	 * @param xC: x of the center
+	 * @param yC: y of the center
+	 * @param radiusX: radius on x axis
+	 * @param radiusY: radius on y axis
+	 */
+	public void addEllipse(String name, double xC, double yC, double radiusX, double radiusY) {
+		Point center = new Point("", xC, yC);
+		Ellipse e = new Ellipse(name, center, radiusX, radiusY);
+		this.addPrimitive(e);
+	}
+	
+	/**
+	 * Makes and adds a point to the drawing
+	 * @param name: name of the point
+	 * @param x: x of the point
+	 * @param y: y of the point
+	 */
+	public void addPoint(String name, double x, double y) {
+		Point p = new Point(name, x, y);
+		this.addPrimitive(p);
+	}
+	
+	/**
+	 * Makes and adds a polygon to the drawing
+	 * @param name: name of the polygon
+	 * @param xs: list of x coordinates of the vertexes
+	 * @param ys: list of y coordinates of the vertexes
+	 */
+	public void addPolygon(String name, double[] xs, double[] ys) {
+		Point[] v = new Point[xs.length];
+		for(int i = 0; i < v.length; i++) {
+			v[i] = new Point("", xs[i], ys[i]);
+		}
+		
+		Polygon pol = new Polygon(name);
+		for(Point p: v) {
+			pol.addPoint(p);
+		}
+		this.addPrimitive(pol);
+		
+	}
+	
+	/**
+	 * Makes and adds a polyline to the drawing
+	 * @param name: name of the polyline
+	 * @param xs: list of x coordinates of the vertexes
+	 * @param ys: list of y coordinates of the vertexes
+	 */
+	public void addPolyline(String name, double[] xs, double[] ys) {
+		Point[] v = new Point[xs.length];
+		for(int i = 0; i < v.length; i++) {
+			v[i] = new Point("", xs[i], ys[i]);
+		}
+		
+		Polyline pol = new Polyline(name);
+		for(Point p: v) {
+			pol.addPoint(p);
+		}
+		this.addPrimitive(pol);
+		
+	}
+	
+	/**
+	 * Makes and adds a segment to the drawing
+	 * @param name: name of the segment
+	 * @param x1: x of first end
+	 * @param y1: y of first end
+	 * @param x2: x of second end
+	 * @param y2: y of second end
+	 */
+	public void addSegment(String name, double x1, double y1, double x2, double y2) {
+		Point p1 = new Point("", x1, y1);
+		Point p2 = new Point("", x2, y2);
+		Segment s = new Segment(name, p1, p2);
+		this.addPrimitive(s);
+	}
+	
+	
+	/**
+	 * Rotates a primitive
+	 * @param name: name of the primitive to rotate
+	 * @param xC: x of the center of rotation
+	 * @param yC: y of the center of rotation
+	 * @param deg: degrees of rotation
+	 */
+	public void rotatePrimitive(String name, double xC, double yC, double deg) {
+		try {
+			primitives.get(name).rotate(new Point("", xC, yC), deg);
+		}
+		catch(Exception e) {
+			
+		}
+		
+	}
 
 
 	public String getName() {
