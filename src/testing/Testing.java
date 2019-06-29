@@ -38,7 +38,10 @@ public class Testing {
 			CadManager m = new CadManager();
 			m.newDrawing("pippo", false);
 			m.parseCommand("ADD:POLYGON,pippo,2,2,3,3,1,0");
-			m.getDrawing().exportAsJPEG("C:\\Users\\franc\\OneDrive\\Desktop\\test.jpeg", true, true, 5);
+			m.parseCommand("TRANSLATE:PIPPO,10,10");
+			//this path is not recogized: a cause del c:, usare dei substring all'inizio del metodo parseCommand della classe CanManager
+			m.parseCommand("EXPORT:C:\\Users\\franc\\OneDrive\\Desktop\\test.jpeg,true,true,5");
+//			m.getDrawing().exportAsJPEG("C:\\Users\\franc\\OneDrive\\Desktop\\test.jpeg", true, true, 5);
 		
 		}
 		catch(Exception e) {
