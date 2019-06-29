@@ -12,19 +12,46 @@ public class KeyWords {
 	 */
 	public static final String POINT = "POINT";
 	
-	/*
-	 * continuare in modo analogo con i nomi delle primitive e dei vari possibili parametri dei comandi (che non devono cambiare)
-	 * da fare sicuramente:
-	 * circle
-	 * ellipse
-	 * polygon
-	 * polyline
-	 * segment
-	 * save_on_disk
-	 * 
-	 * (per esportazione)
-	 * true
-	 * false
+	/**
+	 * Reference to circle
 	 */
+	public static final String CIRCLE = "CIRCLE";
+	
+	/**
+	 * Reference to ellipse
+	 */
+	public static final String ELLIPSE = "ELLIPSE";
+	
+	/**
+	 * Reference to polygon
+	 */
+	public static final String POLYGON = "POLYGON";
+	
+	/**
+	 * Reference to polyline
+	 */
+	public static final String POLYLINE = "POLYLINE";
+	
+	/**
+	 * Reference to segment
+	 */
+	public static final String SEGMENT = "SEGMENT";
+	
+	/**
+	 * Reference to save on disk saving type
+	 */
+	public static final String SAVE_ON_DISK = "SAVE_ON_DISK";
+	
+	/**
+	 * Reference to true statement
+	 */
+	public static final String TRUE = "TRUE";
+	
+	/**
+	 * Reference to false statement
+	 */
+	public static final String FALSE = "FALSE";
+	
+	
 	
 }
