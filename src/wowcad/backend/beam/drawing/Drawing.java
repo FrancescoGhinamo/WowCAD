@@ -310,6 +310,35 @@ public class Drawing implements Serializable {
 		}
 		
 	}
+	
+	/**
+	 * Scales a primitive
+	 * @param name: name of the primitive to scale
+	 * @param scaleFactor: scaling factor
+	 */
+	public void scalePrimitive(String name, double scaleFactor) {
+		try {
+			primitives.get(name).scale(scaleFactor);
+		}
+		catch(Exception e) {
+			
+		}
+	}
+	
+	/**
+	 * Translates a primitive
+	 * @param name: name of the primitive to translate
+	 * @param deltaX: x movement
+	 * @param deltaY: y movement
+	 */
+	public void translatePrimitive(String name, double deltaX, double deltaY) {
+		try {
+			primitives.get(name).translate(deltaX, deltaY);
+		}
+		catch(Exception e) {
+			
+		}
+	}
 
 
 	public String getName() {

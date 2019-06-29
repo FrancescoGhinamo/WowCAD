@@ -6,6 +6,7 @@ import wowcad.backend.beam.cadManager.exceptions.ParameterException;
 import wowcad.backend.beam.cadManager.exceptions.UnsavedException;
 import wowcad.backend.beam.drawing.Drawing;
 import wowcad.backend.beam.drawing.SaveType;
+import wowcad.backend.beam.drawing.exceptions.LocationNotSpecifiedException;
 
 /**
  * Command interpreter for the cad
@@ -14,9 +15,15 @@ import wowcad.backend.beam.drawing.SaveType;
  */
 public class CadManager {
 
-	private static final String COMMAND_SPLITTER = ":";
+	/**
+	 * Character to separate the name of the command from the parameters
+	 */
+	public static final String COMMAND_SPLITTER = ":";
 
-	private static final String PARAMETER_SPLITTER = ",";
+	/**
+	 * Character to separate the parameters
+	 */
+	public static final String PARAMETER_SPLITTER = ",";
 
 	/**
 	 * Drawing the manager operates on
@@ -124,12 +131,17 @@ public class CadManager {
 	 * @throws ParameterException 
 	 * @throws DrawingNotPresentException 
 	 */
-	public void parseCommand(String command) throws MalformedCommandException, ParameterException, DrawingNotPresentException {
+	public void parseCommand(String command) throws MalformedCommandException, ParameterException, DrawingNotPresentException, LocationNotSpecifiedException, Exception {
 		if(drawing != null) {
 			String cmd = command.toUpperCase();
 			cmd = cmd.strip();
+			cmd += COMMAND_SPLITTER;
+			
 			try {
 				String[] parts = cmd.split(COMMAND_SPLITTER);
+//				String[] parts = new String[2];
+//				parts[0] = cmd.substring(0, cmd.indexOf(COMMAND_SPLITTER));
+//				parts[1] = cmd.substring(cmd.indexOf(COMMAND_SPLITTER) + 1);
 				switch(parts[0]) {
 				case CommandKeys.ADD:
 					/*
@@ -172,21 +184,38 @@ public class CadManager {
 					break;
 
 				case CommandKeys.SAVE:
+					/*
+					 * no parameters
+					 */
+					parseSave();
 					break;
 
 				case CommandKeys.SAVE_LOC:
-					break;
-
-				case CommandKeys.SAVE_TYPE:
+					/*
+					 * parameters:
+					 * <newSaveLocation>
+					 */
+					parseSaveLoc(parts[1]);
 					break;
 
 				case CommandKeys.SCALE:
+					/*
+					 * parameters:
+					 * <primitiveName>,<scaleFactor>
+					 */
+					parseScale(parts[1]);
 					break;
 
 				case CommandKeys.TRANSLATE:
+					parseTranslate(parts[1]);
 					break;
 
 				case CommandKeys.EXPORT:
+					/*
+					 * parameters:
+					 * <expLocation>,<axis?>,<grid?>,<fact>
+					 */
+					parseExport(parts[1]);
 					break;
 
 				default:
@@ -197,6 +226,10 @@ public class CadManager {
 				throw new MalformedCommandException();
 			} catch (ParameterException e) {
 				throw e;
+			} catch (LocationNotSpecifiedException e) {
+				throw e;
+			} catch (Exception e) {
+				throw e;
 			}
 		}
 		else {
@@ -206,6 +239,12 @@ public class CadManager {
 
 	}
 
+	
+
+	
+
+	
+
 	/**
 	 * Parses operations to add a primitive to the drawing
 	 * @param parameters: line of parameters
@@ -214,7 +253,8 @@ public class CadManager {
 	 */
 	private void parseAdd(String parameters) throws MalformedCommandException, ParameterException {
 		try {
-			String[] parts = parameters.split(PARAMETER_SPLITTER);
+			String p = parameters + PARAMETER_SPLITTER;
+			String[] parts = p.split(PARAMETER_SPLITTER);
 
 			switch(parts[0]) {
 			case KeyWords.CIRCLE:
@@ -410,7 +450,11 @@ public class CadManager {
 	private void parseRotate(String params) throws MalformedCommandException, ParameterException {
 		String[] parts = params.split(PARAMETER_SPLITTER);
 		try {
-			
+			String name = parts[0];
+			double xc = Double.parseDouble(parts[1]);
+			double yc = Double.parseDouble(parts[2]);
+			double ang = Double.parseDouble(parts[3]);
+			drawing.rotatePrimitive(name, xc, yc, ang);
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
 			throw new MalformedCommandException();
@@ -418,6 +462,106 @@ public class CadManager {
 		catch(Exception e) {
 			throw new ParameterException();
 		}
+	}
+	
+	/**
+	 * Scales a shape
+	 * @param params: parameters
+	 * @throws MalformedCommandException 
+	 * @throws ParameterException 
+	 */
+	private void parseScale(String params) throws MalformedCommandException, ParameterException {
+		String[] parts = params.split(PARAMETER_SPLITTER);
+		try {
+			String name = parts[0];
+			double fact = Double.parseDouble(parts[1]);
+			drawing.scalePrimitive(name, fact);
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			throw new MalformedCommandException();
+		}
+		catch(Exception e) {
+			throw new ParameterException();
+		}
+		
+	}
+	
+	private void parseTranslate(String params) throws MalformedCommandException, ParameterException {
+		String[] parts = params.split(PARAMETER_SPLITTER);
+		try {
+			String name = parts[0];
+			double dX = Double.parseDouble(parts[1]);
+			double dY = Double.parseDouble(parts[2]);
+			drawing.translatePrimitive(name, dX, dY);
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			throw new MalformedCommandException();
+		}
+		catch(Exception e) {
+			throw new ParameterException();
+		}
+	}
+	
+	/**
+	 * Saves the drawing
+	 * @throws Exception 
+	 */
+	private void parseSave() throws LocationNotSpecifiedException, Exception {
+		try {
+			drawing.saveDrawing();
+		} catch (LocationNotSpecifiedException e) {
+			throw e;
+		} catch (Exception e) {
+			throw e;
+		}
+		
+	}
+	
+	private void parseExport(String params) throws MalformedCommandException, ParameterException {
+		String[] parts = params.split(PARAMETER_SPLITTER);
+		try {
+			String loc = parts[0];
+			boolean axis = true;
+			switch(parts[1]) {
+			case KeyWords.TRUE:
+				axis = true;
+				break;
+				
+			case KeyWords.FALSE:
+				axis = false;
+				break;
+			}
+			
+			boolean grid = true;
+			switch(parts[2]) {
+			case KeyWords.TRUE:
+				grid = true;
+				break;
+				
+			case KeyWords.FALSE:
+				grid = false;
+				break;
+			}
+			
+			int f = Integer.parseInt(parts[3]);
+			
+			drawing.exportAsJPEG(loc, axis, grid, f);
+		}
+		catch(ArrayIndexOutOfBoundsException e) {
+			throw new MalformedCommandException();
+		}
+		catch(Exception e) {
+			throw new ParameterException();
+		}
+	}
+	
+	/**
+	 * Changes the save location of the drawing
+	 * @param loc: new save location
+	 */
+	private void parseSaveLoc(String loc) {
+		drawing.setSaveLocation(loc);
+		
 	}
 	
 	public Drawing getDrawing() {

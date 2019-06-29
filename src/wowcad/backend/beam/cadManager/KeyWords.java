@@ -38,11 +38,6 @@ public class KeyWords {
 	public static final String SEGMENT = "SEGMENT";
 	
 	/**
-	 * Reference to save on disk saving type
-	 */
-	public static final String SAVE_ON_DISK = "SAVE_ON_DISK";
-	
-	/**
 	 * Reference to true statement
 	 */
 	public static final String TRUE = "TRUE";

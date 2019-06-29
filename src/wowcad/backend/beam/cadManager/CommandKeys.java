@@ -51,12 +51,7 @@ public class CommandKeys {
 	 * Command to change the save location of the file
 	 */
 	public static final String SAVE_LOC = "SAVE_LOC";
-	
-	/**
-	 * Command to change how to the drawing is saved
-	 */
-	public static final String SAVE_TYPE = "SAVE_TYPE";
-	
+		
 	/**
 	 * Command to export the drawing
 	 */
