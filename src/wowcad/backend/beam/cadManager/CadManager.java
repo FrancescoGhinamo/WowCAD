@@ -134,14 +134,12 @@ public class CadManager {
 	public void parseCommand(String command) throws MalformedCommandException, ParameterException, DrawingNotPresentException, LocationNotSpecifiedException, Exception {
 		if(drawing != null) {
 			String cmd = command.toUpperCase();
-			cmd = cmd.strip();
-			cmd += COMMAND_SPLITTER;
-			
+			cmd = cmd.strip();			
 			try {
-				String[] parts = cmd.split(COMMAND_SPLITTER);
-//				String[] parts = new String[2];
-//				parts[0] = cmd.substring(0, cmd.indexOf(COMMAND_SPLITTER));
-//				parts[1] = cmd.substring(cmd.indexOf(COMMAND_SPLITTER) + 1);
+//				String[] parts = cmd.split(COMMAND_SPLITTER);
+				String[] parts = new String[2];
+				parts[0] = cmd.substring(0, cmd.indexOf(COMMAND_SPLITTER));
+				parts[1] = cmd.substring(cmd.indexOf(COMMAND_SPLITTER) + 1);
 				switch(parts[0]) {
 				case CommandKeys.ADD:
 					/*
