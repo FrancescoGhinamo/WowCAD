@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Hashtable;
+import java.util.Observable;
 
 import wowcad.backend.beam.drawing.exceptions.LocationNotSpecifiedException;
 import wowcad.backend.beam.shapes.Circle;
@@ -22,7 +23,8 @@ import wowcad.backend.service.SerializationType;
  * @author franc
  *
  */
-public class Drawing implements Serializable {
+@SuppressWarnings("deprecation")
+public class Drawing extends Observable implements Serializable {
 
 
 	private static final long serialVersionUID = 2484661260610998267L;
@@ -162,6 +164,8 @@ public class Drawing implements Serializable {
 	public void addPrimitive(Primitive pr) {
 		primitives.put(pr.getName(), pr);
 		modified = true;
+		setChanged();
+		notifyObservers(pr);
 		
 	}
 
@@ -172,6 +176,8 @@ public class Drawing implements Serializable {
 	public void removePrimitive(String name) {
 		primitives.remove(name);
 		modified = true;
+		setChanged();
+		notifyObservers(name);
 	}
 
 
@@ -304,6 +310,8 @@ public class Drawing implements Serializable {
 	public void rotatePrimitive(String name, double xC, double yC, double deg) {
 		try {
 			primitives.get(name).rotate(new Point("", xC, yC), deg);
+			setChanged();
+			notifyObservers();
 		}
 		catch(Exception e) {
 			
@@ -319,6 +327,8 @@ public class Drawing implements Serializable {
 	public void scalePrimitive(String name, double scaleFactor) {
 		try {
 			primitives.get(name).scale(scaleFactor);
+			setChanged();
+			notifyObservers();
 		}
 		catch(Exception e) {
 			
@@ -334,6 +344,8 @@ public class Drawing implements Serializable {
 	public void translatePrimitive(String name, double deltaX, double deltaY) {
 		try {
 			primitives.get(name).translate(deltaX, deltaY);
+			setChanged();
+			notifyObservers();
 		}
 		catch(Exception e) {
 			

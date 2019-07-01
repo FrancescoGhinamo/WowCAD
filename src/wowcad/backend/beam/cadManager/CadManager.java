@@ -1,5 +1,7 @@
 package wowcad.backend.beam.cadManager;
 
+import java.util.Observer;
+
 import wowcad.backend.beam.cadManager.exceptions.DrawingNotPresentException;
 import wowcad.backend.beam.cadManager.exceptions.MalformedCommandException;
 import wowcad.backend.beam.cadManager.exceptions.ParameterException;
@@ -13,6 +15,7 @@ import wowcad.backend.beam.drawing.exceptions.LocationNotSpecifiedException;
  * @author franc
  *
  */
+@SuppressWarnings("deprecation")
 public class CadManager {
 
 	/**
@@ -29,6 +32,11 @@ public class CadManager {
 	 * Drawing the manager operates on
 	 */
 	private Drawing drawing;
+	
+	/**
+	 * Forwarded observer for the drawing
+	 */
+	private Observer forwardedObserver;
 
 	/**
 	 * Constructor
@@ -36,7 +44,21 @@ public class CadManager {
 	public CadManager() {
 		super();
 		this.drawing = null;
+		this.forwardedObserver = null;
 	}
+	
+	
+
+	/**
+	 * Constructor
+	 * @param forwardedObserver: forwarded observer for the drawing
+	 */
+	public CadManager(Observer forwardedObserver) {
+		this();
+		this.forwardedObserver = forwardedObserver;
+	}
+
+
 
 	/**
 	 * Instantiates a new drawing
@@ -47,10 +69,16 @@ public class CadManager {
 	public void newDrawing(String name, boolean force) throws UnsavedException {
 		if(force || drawing == null) {
 			drawing = new Drawing(name);
+			if(forwardedObserver != null) {
+				drawing.addObserver(forwardedObserver);
+			}
 		}
 		else {
 			if(!drawing.isModified()) {
 				drawing = new Drawing(name);
+				if(forwardedObserver != null) {
+					drawing.addObserver(forwardedObserver);
+				}
 			}
 			else {
 				throw new UnsavedException();
@@ -68,10 +96,16 @@ public class CadManager {
 	public void newDrawing(String name, String description, boolean force) throws UnsavedException {
 		if(force || drawing == null) {
 			drawing = new Drawing(name, description);
+			if(forwardedObserver != null) {
+				drawing.addObserver(forwardedObserver);
+			}
 		}
 		else {
 			if(!drawing.isModified()) {
 				drawing = new Drawing(name, description);
+				if(forwardedObserver != null) {
+					drawing.addObserver(forwardedObserver);
+				}
 			}
 			else {
 				throw new UnsavedException();
@@ -91,10 +125,16 @@ public class CadManager {
 	public void newDrawing(String name, String description, String saveLocation, SaveType saveType, boolean force) throws UnsavedException {
 		if(force || drawing == null) {
 			drawing = new Drawing(name, description, saveLocation, saveType);
+			if(forwardedObserver != null) {
+				drawing.addObserver(forwardedObserver);
+			}
 		}
 		else {
 			if(!drawing.isModified()) {
 				drawing = new Drawing(name, description, saveLocation, saveType);
+				if(forwardedObserver != null) {
+					drawing.addObserver(forwardedObserver);
+				}
 			}
 			else {
 				throw new UnsavedException();
