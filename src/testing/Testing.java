@@ -35,7 +35,7 @@ public class Testing {
 //			e.printStackTrace();
 //		}
 		try {
-			CadManager m = new CadManager();
+			CadManager m = new CadManager(null);
 			m.newDrawing("pippo", false);
 			m.parseCommand("ADD:POLYGON,pippo,2,2,3,3,1,0");
 			m.parseCommand("TRANSLATE:PIPPO,10,10");
