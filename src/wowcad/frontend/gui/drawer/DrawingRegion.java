@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseListener;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import wowcad.backend.beam.cadManager.CadManager;
@@ -22,10 +21,6 @@ public class DrawingRegion extends JPanel {
 	
 	private static final long serialVersionUID = 320574687820271280L;
 	
-	/**
-	 * Owner of the DrawingRegion
-	 */
-	private JFrame owner;
 	
 	/**
 	 * Associated CadManager
@@ -46,13 +41,11 @@ public class DrawingRegion extends JPanel {
 
 	/**
 	 * Constructor
-	 * @param owner: owner of the drawing region
 	 * @param forwarded: forwarded mouse listener
 	 */
-	public DrawingRegion(JFrame owner, MouseListener forwarded) {
+	public DrawingRegion(MouseListener forwarded) {
 		super();
 		setBackground(Color.BLACK);
-		this.owner = owner;
 		initComponents(forwarded);
 		this.cadManager = new CadManager(drawingCanvas);
 		
