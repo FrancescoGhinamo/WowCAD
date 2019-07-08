@@ -41,12 +41,11 @@ public class DrawingRegion extends JPanel {
 
 	/**
 	 * Constructor
-	 * @param forwarded: forwarded mouse listener
 	 */
-	public DrawingRegion(MouseListener forwarded) {
+	public DrawingRegion() {
 		super();
 		setBackground(Color.BLACK);
-		initComponents(forwarded);
+		initComponents();
 		this.cadManager = new CadManager(drawingCanvas);
 		
 	}
@@ -54,10 +53,9 @@ public class DrawingRegion extends JPanel {
 	/**
 	 * Components initialization
 	 */
-	private void initComponents(MouseListener forwarded) {
+	private void initComponents() {
 		navigationPane = new NavigationPane(this);
 		drawingCanvas = new DrawingCanvas();
-		drawingCanvas.addMouseListener(forwarded);
 		
 		setLayout(new BorderLayout());
 		this.add(drawingCanvas, BorderLayout.CENTER);
@@ -98,6 +96,9 @@ public class DrawingRegion extends JPanel {
 	}
 
 
+	public void addMouseListener(MouseListener l) {
+		drawingCanvas.addMouseListener(l);
+	}
 	
 
 	/**
