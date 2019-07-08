@@ -15,7 +15,7 @@ public class TestFrame extends JFrame {
 		super("Test");
 		setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.add(new DrawingRegion(null));
+		this.add(new DrawingRegion());
 		this.setBackground(Color.BLACK);
 	}
 
