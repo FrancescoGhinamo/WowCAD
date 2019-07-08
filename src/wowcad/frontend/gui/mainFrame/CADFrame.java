@@ -111,7 +111,15 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 		this.add(initRibbon(), BorderLayout.NORTH);
 
 		drawingRegion = new DrawingRegion();
-		drawingRegion.addMouseListener(this);
+		
+		/*dato che tramite i click si vanno a definire i punti che serviranno al dialog per generare l'oggetto grafico
+		 *conviene fare che il listener sia il dialog corrispondente (in modo da ottenere i punti gia' nella classe del dialog)
+		 *se scelgo questa soluzione devo ricordarmi di aggiungere il dialog come mouse listener della drawing region
+		 *e poi toglierlo dai listener dopo che il dispose del dialog
+		 *il dialog dovra restituire una stringa che è il comando che verrà eseguito
+		 */
+		 
+//		drawingRegion.addMouseListener(this);
 
 		this.add(drawingRegion, BorderLayout.CENTER);
 
