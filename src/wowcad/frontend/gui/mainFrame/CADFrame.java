@@ -9,15 +9,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+import wowcad.backend.beam.cadManager.CadManager;
+import wowcad.backend.beam.cadManager.CommandKeys;
+import wowcad.backend.beam.cadManager.exceptions.UnsavedException;
+import wowcad.backend.beam.drawing.Drawing;
+import wowcad.frontend.gui.dialogs.NewDrawingDialog;
 import wowcad.frontend.gui.drawer.DrawingRegion;
 
 /**
@@ -312,26 +321,124 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 
 		return cmdBar;
 	}
+	
+	
+	private JFileChooser initJFileChooser() {
+		JFileChooser fc = new JFileChooser();
+		fc.setFileFilter(new FileNameExtensionFilter("WowCAD drawing", Drawing.EXTENSION));
+		return fc;
+	}
+	
+	private void showException(Exception e) {
+		JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void performNew() {
+		NewDrawingDialog nD = new NewDrawingDialog(this, true);
+		nD.setVisible(true); 
+		if(nD.isOk()) {
+			try {
+				drawingRegion.createDrawing(nD.getName(), nD.getDescription(), nD.getSaveLocation(), nD.getSaveType(), false);
+				
+			} catch (UnsavedException e) {
+				int res = JOptionPane.showConfirmDialog(this, e.getMessage() + "\nCreate drawing anyway?", "WowCAD", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(res == JOptionPane.YES_OPTION) {
+					try {
+						drawingRegion.createDrawing(nD.getName(), nD.getDescription(), nD.getSaveLocation(), nD.getSaveType(), true);
+					} catch (UnsavedException ex) {
+						
+					}
+				}
+			}
+		}
+	}
 
+	public void performOpen() {
+		JFileChooser fc = initJFileChooser();
+		if(fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+			try {
+				drawingRegion.openDrawing(fc.getSelectedFile().getAbsolutePath(), false);
+				
+			} catch (UnsavedException e) {
+				int res = JOptionPane.showConfirmDialog(this, e.getMessage() + "\nOpen drawing anyway?", "WowCAD", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(res == JOptionPane.YES_OPTION) {
+					try {
+						drawingRegion.openDrawing(fc.getSelectedFile().getAbsolutePath(), true);
+					} catch (Exception ex) {
+						showException(e);
+					}
+				}
+			} catch (Exception e) {
+				showException(e);
+			}
+		}
+	}
+	
+	public void performSave() {
+		String cmd = CommandKeys.SAVE;
+		try {
+			drawingRegion.applyCommand(cmd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			showException(e);
+		}
+	}
+
+	public void performSaveAs() {
+		JFileChooser fc = initJFileChooser();
+		if(fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			File _f = fc.getSelectedFile();
+			if(!_f.getAbsolutePath().endsWith("." + Drawing.EXTENSION)) {
+				_f = new File(_f.getAbsolutePath() + "." + Drawing.EXTENSION);
+			}
+			String cmd = CommandKeys.SAVE_LOC + CadManager.COMMAND_SPLITTER + _f.getAbsolutePath();
+			try {
+				drawingRegion.applyCommand(cmd);
+				drawingRegion.applyCommand(CommandKeys.SAVE);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void performClose() {
+		try {
+			drawingRegion.closeDrawing(false);
+			
+		} catch (UnsavedException e) {
+			int res = JOptionPane.showConfirmDialog(this, e.getMessage() + "\nClose drawing anyway?", "WowCAD", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if(res == JOptionPane.YES_OPTION) {
+				try {
+					drawingRegion.closeDrawing(true);
+				} catch (UnsavedException ex) {
+					
+				}
+			}
+		}
+	}
+	
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent aE) {
 		if(aE.getSource().equals(itemNew)) {
-
+			performNew();
 		}
 		else if(aE.getSource().equals(itemOpen)) {
-
+			performOpen();
 		}
 		else if(aE.getSource().equals(itemSave)) {
-
+			performSave();
 		}
 		else if(aE.getSource().equals(itemSaveAs)) {
-
+			performSaveAs();
 		}
 		else if(aE.getSource().equals(itemClose)) {
-
+			performClose();
 		}
 		else if(aE.getSource().equals(itemExport) || aE.getSource().equals(btnExport)) {
-
+			
 		}
 		else if(aE.getSource().equals(itemExit)) {
 
