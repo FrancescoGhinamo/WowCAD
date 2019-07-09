@@ -47,7 +47,7 @@ public class PolylineDialog extends JDialog implements ActionListener, CoordRece
 	private String points;
 
 	public PolylineDialog(JFrame owner, DialogCallback cbk) {
-		super(owner, "Point", false);
+		super(owner, "Polyline", false);
 		initComponents();
 		pack();
 		this.cbk = cbk;

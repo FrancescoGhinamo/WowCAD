@@ -46,7 +46,7 @@ public class PolygonDialog extends JDialog implements ActionListener, CoordRecei
 	private String points;
 
 	public PolygonDialog(JFrame owner, DialogCallback cbk) {
-		super(owner, "Point", false);
+		super(owner, "Polygon", false);
 		initComponents();
 		pack();
 		this.cbk = cbk;

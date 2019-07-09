@@ -41,7 +41,7 @@ public class EllipseDialog extends JDialog implements ActionListener, CoordRecei
 	private DialogCallback cbk;
 
 	public EllipseDialog(JFrame owner, DialogCallback cbk) {
-		super(owner, "Segment", false);
+		super(owner, "Ellipse", false);
 		initComponents();
 		pack();
 		this.cbk = cbk;
