@@ -86,6 +86,7 @@ public class DrawingRegion extends JPanel {
 	public void createDrawing(String name, String description, String saveLocation, SaveType saveType, boolean force) throws UnsavedException {
 		try {
 			cadManager.newDrawing(name, description, saveLocation, saveType, force);
+			drawingCanvas.update(cadManager.getDrawing(), null);
 		} catch (UnsavedException e) {
 			throw e;
 		}

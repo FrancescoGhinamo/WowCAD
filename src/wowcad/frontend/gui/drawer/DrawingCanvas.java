@@ -40,6 +40,9 @@ public class DrawingCanvas extends JLabel implements Observer, MouseListener {
 	 */
 	private static final int MOVE_FACTOR = 5;
 	
+	/**
+	 * Step at each zoom action
+	 */
 	private static final double ZOOM_FACTOR = 0.1;
 	
 	
