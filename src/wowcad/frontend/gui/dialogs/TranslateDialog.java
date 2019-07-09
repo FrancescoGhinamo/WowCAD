@@ -39,7 +39,7 @@ public class TranslateDialog extends JDialog implements ActionListener {
 	private DialogCallback cbk;
 
 	public TranslateDialog(JFrame owner, DialogCallback cbk, String[] names) {
-		super(owner, "Point", false);
+		super(owner, "Translate", false);
 		initComponents(names);
 		pack();
 		this.cbk = cbk;
