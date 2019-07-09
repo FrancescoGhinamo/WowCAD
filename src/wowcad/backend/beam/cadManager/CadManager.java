@@ -32,7 +32,7 @@ public class CadManager {
 	 * Drawing the manager operates on
 	 */
 	private Drawing drawing;
-	
+
 	/**
 	 * Forwarded observer for the drawing
 	 */
@@ -46,8 +46,8 @@ public class CadManager {
 		this.drawing = null;
 		this.forwardedObserver = null;
 	}
-	
-	
+
+
 
 	/**
 	 * Constructor
@@ -58,7 +58,7 @@ public class CadManager {
 		this.forwardedObserver = forwardedObserver;
 	}
 
-	
+
 	/**
 	 * Opens a saved drawing
 	 * @param source: source from which open the drawing
@@ -199,92 +199,101 @@ public class CadManager {
 	 */
 	public void parseCommand(String command) throws MalformedCommandException, ParameterException, DrawingNotPresentException, LocationNotSpecifiedException, Exception {
 		if(drawing != null) {
-			String cmd = command.toUpperCase();
-			cmd = cmd.strip();
-			cmd += COMMAND_SPLITTER;
+			
+			String cmd = command;
 			try {
-//				String[] parts = cmd.split(COMMAND_SPLITTER);
-				String[] parts = new String[2];
-				parts[0] = cmd.substring(0, cmd.indexOf(COMMAND_SPLITTER));
-				parts[1] = cmd.substring(cmd.indexOf(COMMAND_SPLITTER) + 1);
-				switch(parts[0]) {
-				case CommandKeys.ADD:
-					/*
-					 * parameters:
-					 * <shape>,<param1>,<param2>,<param3>...
-					 */
-					parseAdd(parts[1]);
-					break;
-
-				case CommandKeys.DESCRIPTION:
-					/*
-					 * parameters:
-					 * <newDescription>
-					 */
-					parseDescription(parts[1]);
-					break;
-
-				case CommandKeys.NAME:
-					/*
-					 * parameters:
-					 * <newNamen>
-					 */
-					parseName(parts[1]);
-					break;
-
-				case CommandKeys.REMOVE:
-					/*
-					 * parameters:
-					 * <primitiveName>
-					 */
-					parseRemove(parts[1]);
-					break;
-
-				case CommandKeys.ROTATE:
-					/*
-					 * parameters:
-					 * <primitiveName>,<rotCenterX>,<rotCenterY>,<rotDegrees>
-					 */
-					parseRotate(parts[1]);
-					break;
-
-				case CommandKeys.SAVE:
+				if(cmd.equals(CommandKeys.SAVE)) {
 					/*
 					 * no parameters
 					 */
 					parseSave();
-					break;
+				}
+				else {
+					//				String[] parts = cmd.split(COMMAND_SPLITTER);
+					String[] parts = new String[2];
+					parts[0] = cmd.substring(0, cmd.indexOf(COMMAND_SPLITTER));
+					parts[1] = cmd.substring(cmd.indexOf(COMMAND_SPLITTER) + 1);
+					
+					parts[0] = parts[0].toUpperCase();
+					switch(parts[0]) {
+					case CommandKeys.ADD:
+						/*
+						 * parameters:
+						 * <shape>,<param1>,<param2>,<param3>...
+						 */
+						parseAdd(parts[1]);
+						break;
 
-				case CommandKeys.SAVE_LOC:
-					/*
-					 * parameters:
-					 * <newSaveLocation>
-					 */
-					parseSaveLoc(parts[1]);
-					break;
+					case CommandKeys.DESCRIPTION:
+						/*
+						 * parameters:
+						 * <newDescription>
+						 */
+						parseDescription(parts[1]);
+						break;
 
-				case CommandKeys.SCALE:
-					/*
-					 * parameters:
-					 * <primitiveName>,<scaleFactor>
-					 */
-					parseScale(parts[1]);
-					break;
+					case CommandKeys.NAME:
+						/*
+						 * parameters:
+						 * <newNamen>
+						 */
+						parseName(parts[1]);
+						break;
 
-				case CommandKeys.TRANSLATE:
-					parseTranslate(parts[1]);
-					break;
+					case CommandKeys.REMOVE:
+						/*
+						 * parameters:
+						 * <primitiveName>
+						 */
+						parseRemove(parts[1]);
+						break;
 
-				case CommandKeys.EXPORT:
-					/*
-					 * parameters:
-					 * <expLocation>,<axis?>,<grid?>,<fact>
-					 */
-					parseExport(parts[1]);
-					break;
+					case CommandKeys.ROTATE:
+						/*
+						 * parameters:
+						 * <primitiveName>,<rotCenterX>,<rotCenterY>,<rotDegrees>
+						 */
+						parseRotate(parts[1]);
+						break;
 
-				default:
-					throw new MalformedCommandException();
+					case CommandKeys.SAVE:
+						/*
+						 * no parameters
+						 */
+						parseSave();
+						break;
+
+					case CommandKeys.SAVE_LOC:
+						/*
+						 * parameters:
+						 * <newSaveLocation>
+						 */
+						parseSaveLoc(parts[1]);
+						break;
+
+					case CommandKeys.SCALE:
+						/*
+						 * parameters:
+						 * <primitiveName>,<scaleFactor>
+						 */
+						parseScale(parts[1]);
+						break;
+
+					case CommandKeys.TRANSLATE:
+						parseTranslate(parts[1]);
+						break;
+
+					case CommandKeys.EXPORT:
+						/*
+						 * parameters:
+						 * <expLocation>,<axis?>,<grid?>,<fact>
+						 */
+						parseExport(parts[1]);
+						break;
+
+					default:
+						throw new MalformedCommandException();
+					}
 				}
 			}
 			catch(ArrayIndexOutOfBoundsException e) {
@@ -304,11 +313,11 @@ public class CadManager {
 
 	}
 
-	
 
-	
 
-	
+
+
+
 
 	/**
 	 * Parses operations to add a primitive to the drawing
@@ -487,7 +496,7 @@ public class CadManager {
 	private void parseDescription(String des) {
 		drawing.setDescription(des);
 	}
-	
+
 	/**
 	 * Changes the description of the drawing
 	 * @param name: new name
@@ -495,17 +504,17 @@ public class CadManager {
 	private void parseName(String name) {
 		drawing.setName(name);
 	}
-	
+
 	/**
 	 * Removes a primitive from the drawing
 	 * @param prName: name of the primitive to remove
 	 */
 	private void parseRemove(String prName) {
-		
+
 		drawing.removePrimitive(prName);
-		
+
 	}
-	
+
 	/**
 	 * Rotates a shape
 	 * @param params: parameters
@@ -528,7 +537,7 @@ public class CadManager {
 			throw new ParameterException();
 		}
 	}
-	
+
 	/**
 	 * Scales a shape
 	 * @param params: parameters
@@ -548,9 +557,9 @@ public class CadManager {
 		catch(Exception e) {
 			throw new ParameterException();
 		}
-		
+
 	}
-	
+
 	private void parseTranslate(String params) throws MalformedCommandException, ParameterException {
 		String[] parts = params.split(PARAMETER_SPLITTER);
 		try {
@@ -566,7 +575,7 @@ public class CadManager {
 			throw new ParameterException();
 		}
 	}
-	
+
 	/**
 	 * Saves the drawing
 	 * @throws Exception 
@@ -579,9 +588,9 @@ public class CadManager {
 		} catch (Exception e) {
 			throw e;
 		}
-		
+
 	}
-	
+
 	private void parseExport(String params) throws MalformedCommandException, ParameterException {
 		String[] parts = params.split(PARAMETER_SPLITTER);
 		try {
@@ -591,25 +600,25 @@ public class CadManager {
 			case KeyWords.TRUE:
 				axis = true;
 				break;
-				
+
 			case KeyWords.FALSE:
 				axis = false;
 				break;
 			}
-			
+
 			boolean grid = true;
 			switch(parts[2]) {
 			case KeyWords.TRUE:
 				grid = true;
 				break;
-				
+
 			case KeyWords.FALSE:
 				grid = false;
 				break;
 			}
-			
+
 			int f = Integer.parseInt(parts[3]);
-			
+
 			drawing.exportAsJPEG(loc, axis, grid, f);
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
@@ -619,21 +628,21 @@ public class CadManager {
 			throw new ParameterException();
 		}
 	}
-	
+
 	/**
 	 * Changes the save location of the drawing
 	 * @param loc: new save location
 	 */
 	private void parseSaveLoc(String loc) {
 		drawing.setSaveLocation(loc);
-		
+
 	}
-	
+
 	public Drawing getDrawing() {
 		return drawing;
 	}
 
 
-	
+
 
 }
