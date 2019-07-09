@@ -2,7 +2,6 @@ package wowcad.frontend.gui.drawer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -106,9 +105,6 @@ public class DrawingRegion extends JPanel {
 	}
 
 
-	public void addMouseListener(MouseListener l) {
-		drawingCanvas.addMouseListener(l);
-	}
 	
 
 	/**

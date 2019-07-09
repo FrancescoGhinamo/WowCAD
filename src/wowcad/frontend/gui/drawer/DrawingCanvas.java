@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -28,7 +30,7 @@ import wowcad.backend.beam.shapes.Segment;
  *
  */
 @SuppressWarnings("deprecation")
-public class DrawingCanvas extends JLabel implements Observer {
+public class DrawingCanvas extends JLabel implements Observer, MouseListener {
 
 
 	private static final long serialVersionUID = -5190658018626453048L;
@@ -78,6 +80,11 @@ public class DrawingCanvas extends JLabel implements Observer {
 	private Drawing drawing;
 	
 	/**
+	 * Associated CoordReceiver
+	 */
+	private CoordReceiver cRec;
+	
+	/**
 	 * Constructor with default values
 	 */
 	public DrawingCanvas() {
@@ -87,6 +94,7 @@ public class DrawingCanvas extends JLabel implements Observer {
 		this.axis = true;
 		this.grid = true;
 		this.drawing = null;
+		this.addMouseListener(this);
 	}
 	
 	
@@ -387,5 +395,46 @@ public class DrawingCanvas extends JLabel implements Observer {
 		this.grid = grid;
 	}
 
+
+
+
+	public void setcRec(CoordReceiver cRec) {
+		this.cRec = cRec;
+	}
+
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int rawX = e.getX();
+		int rawT = e.getY();
+		
+		//x component
+		double fX = rawX;
+		fX -= this.getWidth() / 2;
+		fX /= redFact;
+		
+		
+		//y component
+		double fY = 0;
+		
+		
+		if(cRec != null) {
+			cRec.onReceive(fX, fY);
+		}
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {}
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+	@Override
+	public void mouseExited(MouseEvent e) {}
+
+	
 
 }
