@@ -29,6 +29,11 @@ public class Drawing extends Observable implements Serializable {
 
 	private static final long serialVersionUID = 2484661260610998267L;
 	
+	/**
+	 * Extension assigned to the files
+	 */
+	public static final String EXTENSION = "wdwg";
+	
 
 	/**
 	 * Name assigned to this drawing
