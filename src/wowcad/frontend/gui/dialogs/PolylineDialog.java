@@ -96,6 +96,7 @@ public class PolylineDialog extends JDialog implements ActionListener, CoordRece
 		txts.add(new JLabel("Name"));
 		txts.add(txtName = new JTextField(20));
 		btnAdd = new JButton("Add point");
+		btnAdd.addActionListener(this);
 		txts.add(btnAdd);
 		txts.add(txtCoord = new JTextField(20));
 
@@ -139,7 +140,7 @@ public class PolylineDialog extends JDialog implements ActionListener, CoordRece
 		}
 		else if(e.getSource().equals(btnAdd)) {
 			try {
-				tbl.addRow(txtCoord.getText().split(";"));
+				tbl.addRow(txtCoord.getText().split(","));
 				points += "," + txtCoord.getText();			
 				txtCoord.setText("");
 			}

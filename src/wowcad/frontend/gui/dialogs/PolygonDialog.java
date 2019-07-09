@@ -95,6 +95,7 @@ public class PolygonDialog extends JDialog implements ActionListener, CoordRecei
 		txts.add(new JLabel("Name"));
 		txts.add(txtName = new JTextField(20));
 		btnAdd = new JButton("Add point");
+		btnAdd.addActionListener(this);
 		txts.add(btnAdd);
 		txts.add(txtCoord = new JTextField(20));
 
@@ -138,7 +139,7 @@ public class PolygonDialog extends JDialog implements ActionListener, CoordRecei
 		}
 		else if(e.getSource().equals(btnAdd)) {
 			try {
-				tbl.addRow(txtCoord.getText().split(";"));
+				tbl.addRow(txtCoord.getText().split(","));
 				points += "," + txtCoord.getText();			
 				txtCoord.setText("");
 			}
