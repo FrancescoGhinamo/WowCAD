@@ -29,6 +29,7 @@ import wowcad.backend.beam.drawing.Drawing;
 import wowcad.frontend.gui.dialogs.ExportDialog;
 import wowcad.frontend.gui.dialogs.NewDrawingDialog;
 import wowcad.frontend.gui.dialogs.PointDialog;
+import wowcad.frontend.gui.dialogs.PolygonDialog;
 import wowcad.frontend.gui.dialogs.PolylineDialog;
 import wowcad.frontend.gui.dialogs.SegmentDialog;
 import wowcad.frontend.gui.drawer.DrawingRegion;
@@ -485,6 +486,12 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 		pD.setVisible(true);
 	}
 	
+	public void performInsertPolygon() {
+		PolygonDialog pD = new PolygonDialog(this, this);
+		drawingRegion.getDrawingCanvas().setcRec(pD);
+		pD.setVisible(true);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent aE) {
 		if(aE.getSource().equals(itemNew)) {
@@ -518,7 +525,7 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 			performInsertPolyline();
 		}
 		else if(aE.getSource().equals(itemPolygon) || aE.getSource().equals(btnPolygon)) {
-
+			performInsertPolygon();
 		}
 		else if(aE.getSource().equals(itemEllipse) || aE.getSource().equals(btnEllipse)) {
 
