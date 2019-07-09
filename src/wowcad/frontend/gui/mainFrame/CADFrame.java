@@ -26,6 +26,7 @@ import wowcad.backend.beam.cadManager.CadManager;
 import wowcad.backend.beam.cadManager.CommandKeys;
 import wowcad.backend.beam.cadManager.exceptions.UnsavedException;
 import wowcad.backend.beam.drawing.Drawing;
+import wowcad.frontend.gui.dialogs.ExportDialog;
 import wowcad.frontend.gui.dialogs.NewDrawingDialog;
 import wowcad.frontend.gui.drawer.DrawingRegion;
 
@@ -418,7 +419,26 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 		}
 	}
 	
+	public void performExport() {
+		ExportDialog exp = new ExportDialog(this, true);
+		exp.setVisible(true);
+		if(exp.isOk()) {
+			try {
+				drawingRegion.applyCommand(exp.getCommand());
+			} catch (Exception e) {
+				showException(e);
+			}
+		}
+	}
 	
+	public void performExit() {
+		System.exit(0);
+	}
+	
+	
+	public void perfromInsertPoint() {
+		
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent aE) {
@@ -438,10 +458,10 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 			performClose();
 		}
 		else if(aE.getSource().equals(itemExport) || aE.getSource().equals(btnExport)) {
-			
+			performExport();
 		}
 		else if(aE.getSource().equals(itemExit)) {
-
+			performExit();
 		}
 		else if(aE.getSource().equals(itemPoint) || aE.getSource().equals(btnPoint)) {
 
