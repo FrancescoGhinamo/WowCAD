@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -37,9 +36,9 @@ public class PointDialog extends JDialog implements ActionListener, CoordReceive
 
 
 	private String command;
-	
+
 	private DialogCallback cbk;
-	
+
 	public PointDialog(JFrame owner, DialogCallback cbk) {
 		super(owner, "Point", false);
 		initComponents();
@@ -50,18 +49,18 @@ public class PointDialog extends JDialog implements ActionListener, CoordReceive
 	private void initComponents() {
 
 		this.setLayout(new GridBagLayout());
-		
+
 
 		JPanel cont = new JPanel(new GridLayout(3, 2, 5, 5));
-		
+
 		cont.add(new JLabel("Name"));
 		cont.add(txtName = new JTextField(20));
 		cont.add(new JLabel("X"));
 		cont.add(txtX = new JTextField(20));
 		cont.add(new JLabel("Y"));
 		cont.add(txtY = new JTextField(20));
-		
-		
+
+
 		JPanel but = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(this);
@@ -93,16 +92,13 @@ public class PointDialog extends JDialog implements ActionListener, CoordReceive
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btnOK)) {
 			if(!txtName.getText().equals("") && !txtX.getText().equals("") && !txtY.getText().equals("")) {
-				try {
-					double x = Double.parseDouble(txtX.getText());
-					double y = Double.parseDouble(txtY.getText());
-					command = CommandKeys.ADD + CadManager.COMMAND_SPLITTER + KeyWords.POINT + CadManager.PARAMETER_SPLITTER + txtName.getText() + CadManager.PARAMETER_SPLITTER + x + CadManager.PARAMETER_SPLITTER + y;
-					dispose();
-					cbk.parseCommand(command);
-				}
-				catch(NumberFormatException ex) {
-					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
+
+				String x = txtX.getText();
+				String y = txtY.getText();
+				command = CommandKeys.ADD + CadManager.COMMAND_SPLITTER + KeyWords.POINT + CadManager.PARAMETER_SPLITTER + txtName.getText() + CadManager.PARAMETER_SPLITTER + x + CadManager.PARAMETER_SPLITTER + y;
+				dispose();
+				cbk.parseCommand(command);
+
 			}
 		}
 		else if(e.getSource().equals(btnCancel)) {
@@ -111,7 +107,7 @@ public class PointDialog extends JDialog implements ActionListener, CoordReceive
 
 	}
 
-	
+
 
 	public String getCommand() {
 		return command;
@@ -121,7 +117,7 @@ public class PointDialog extends JDialog implements ActionListener, CoordReceive
 	public void onReceive(double x, double y) {
 		txtX.setText(String.valueOf(x));
 		txtY.setText(String.valueOf(y));
-		
+
 	}
 
 
