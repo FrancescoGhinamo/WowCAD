@@ -65,6 +65,16 @@ public class DrawingRegion extends JPanel {
 	}
 	
 	/**
+	 * Opens a saved drawing
+	 * @param source: source from which open the drawing
+	 * @param force: true to force the creation of the drawing (like to force existing drawing override)
+	 * @throws UnsavedException 
+	 */
+	public void openDrawing(String source, boolean force) throws UnsavedException, Exception {
+		cadManager.openDrawing(source, force);
+	}
+	
+	/**
 	 * Instantiates a new drawing
 	 * @param name: name give to the drawing
 	 * @param description: description

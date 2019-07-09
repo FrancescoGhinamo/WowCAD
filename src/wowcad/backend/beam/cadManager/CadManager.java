@@ -58,6 +58,32 @@ public class CadManager {
 		this.forwardedObserver = forwardedObserver;
 	}
 
+	
+	/**
+	 * Opens a saved drawing
+	 * @param source: source from which open the drawing
+	 * @param force: true to force the creation of the drawing (like to force existing drawing override)
+	 * @throws UnsavedException 
+	 */
+	public void openDrawing(String source, boolean force) throws UnsavedException, Exception {
+		if(force || drawing == null) {
+			drawing = new Drawing(SaveType.FILE_ON_DISK, source);
+			if(forwardedObserver != null) {
+				drawing.addObserver(forwardedObserver);
+			}
+		}
+		else {
+			if(!drawing.isModified()) {
+				drawing = new Drawing(SaveType.FILE_ON_DISK, source);
+				if(forwardedObserver != null) {
+					drawing.addObserver(forwardedObserver);
+				}
+			}
+			else {
+				throw new UnsavedException();
+			}
+		}
+	}
 
 
 	/**
@@ -174,7 +200,8 @@ public class CadManager {
 	public void parseCommand(String command) throws MalformedCommandException, ParameterException, DrawingNotPresentException, LocationNotSpecifiedException, Exception {
 		if(drawing != null) {
 			String cmd = command.toUpperCase();
-			cmd = cmd.strip();			
+			cmd = cmd.strip();
+			cmd += COMMAND_SPLITTER;
 			try {
 //				String[] parts = cmd.split(COMMAND_SPLITTER);
 				String[] parts = new String[2];
