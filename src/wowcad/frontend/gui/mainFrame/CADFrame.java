@@ -29,6 +29,7 @@ import wowcad.backend.beam.drawing.Drawing;
 import wowcad.frontend.gui.dialogs.ExportDialog;
 import wowcad.frontend.gui.dialogs.NewDrawingDialog;
 import wowcad.frontend.gui.dialogs.PointDialog;
+import wowcad.frontend.gui.dialogs.SegmentDialog;
 import wowcad.frontend.gui.drawer.DrawingRegion;
 
 /**
@@ -451,19 +452,30 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 	 */
 	@Override
 	public void parseCommand(String cmd) {
-		try {
-			drawingRegion.applyCommand(cmd);
-			drawingRegion.getDrawingCanvas().setcRec(null);
-		} catch (Exception e) {
-			showException(e);
+		if(!cmd.equals("")) {
+			try {
+				drawingRegion.applyCommand(cmd);
+				
+			} catch (Exception e) {
+				showException(e);
+			}
 		}
+		drawingRegion.getDrawingCanvas().setcRec(null);
 		
 	}
 	
 	public void performInsertPoint() {
 		PointDialog pD = new PointDialog(this, this);
-		pD.setVisible(true);
 		drawingRegion.getDrawingCanvas().setcRec(pD);
+		pD.setVisible(true);
+		
+	}
+	
+	public void performInsertSegment() {
+		SegmentDialog sD = new SegmentDialog(this, this);
+		drawingRegion.getDrawingCanvas().setcRec(sD);
+		sD.setVisible(true);
+		
 	}
 	
 	@Override
@@ -493,7 +505,7 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 			performInsertPoint();
 		}
 		else if(aE.getSource().equals(itemSegment) || aE.getSource().equals(btnSegment)) {
-
+			performInsertSegment();
 		}
 		else if(aE.getSource().equals(itemPolyline) || aE.getSource().equals(btnPolyline)) {
 
