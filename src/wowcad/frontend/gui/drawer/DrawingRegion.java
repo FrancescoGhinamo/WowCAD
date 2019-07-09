@@ -133,6 +133,10 @@ public class DrawingRegion extends JPanel {
 		return cadManager;
 	}
 
+	public DrawingCanvas getDrawingCanvas() {
+		return drawingCanvas;
+	}
+
 
 
 
