@@ -28,6 +28,7 @@ import wowcad.backend.beam.cadManager.exceptions.UnsavedException;
 import wowcad.backend.beam.drawing.Drawing;
 import wowcad.frontend.gui.dialogs.ExportDialog;
 import wowcad.frontend.gui.dialogs.NewDrawingDialog;
+import wowcad.frontend.gui.dialogs.PointDialog;
 import wowcad.frontend.gui.drawer.DrawingRegion;
 
 /**
@@ -35,7 +36,7 @@ import wowcad.frontend.gui.drawer.DrawingRegion;
  * @author franc
  *
  */
-public class CADFrame extends JFrame implements ActionListener, MouseListener {
+public class CADFrame extends JFrame implements ActionListener, MouseListener, DialogCallback {
 
 
 	private static final long serialVersionUID = -158826047285841843L;
@@ -67,6 +68,7 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 	private JMenuItem itemTranslate;
 	private JMenuItem itemRotate;
 	private JMenuItem itemScale;
+	private JMenuItem itemRemove;
 
 	/**
 	 * Help menu
@@ -209,10 +211,14 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 		itemRotate.addActionListener(this);
 		itemScale = new JMenuItem("Scale");
 		itemScale.addActionListener(this);
+		itemRemove = new JMenuItem("Remove");
+		itemRemove.addActionListener(this);
 
 		mnuEdit.add(itemTranslate);
 		mnuEdit.add(itemRotate);
 		mnuEdit.add(itemScale);
+		mnuEdit.addSeparator();
+		mnuEdit.add(itemRemove);
 
 		return mnuEdit;
 	}
@@ -334,6 +340,10 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 		JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
+	
+	/**
+	 * File menu functions
+	 */
 	public void performNew() {
 		NewDrawingDialog nD = new NewDrawingDialog(this, true);
 		nD.setVisible(true); 
@@ -436,8 +446,24 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 	}
 	
 	
-	public void perfromInsertPoint() {
+	/**
+	 * Insert menu functions
+	 */
+	@Override
+	public void parseCommand(String cmd) {
+		try {
+			drawingRegion.applyCommand(cmd);
+			drawingRegion.getDrawingCanvas().setcRec(null);
+		} catch (Exception e) {
+			showException(e);
+		}
 		
+	}
+	
+	public void performInsertPoint() {
+		PointDialog pD = new PointDialog(this, this);
+		pD.setVisible(true);
+		drawingRegion.getDrawingCanvas().setcRec(pD);
 	}
 	
 	@Override
@@ -464,7 +490,7 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 			performExit();
 		}
 		else if(aE.getSource().equals(itemPoint) || aE.getSource().equals(btnPoint)) {
-
+			performInsertPoint();
 		}
 		else if(aE.getSource().equals(itemSegment) || aE.getSource().equals(btnSegment)) {
 
@@ -489,6 +515,9 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 		}
 		else if(aE.getSource().equals(itemScale) || aE.getSource().equals(btnScale)) {
 
+		}
+		else if(aE.getSource().equals(itemRemove)) {
+			
 		}
 		else if(aE.getSource().equals(btnExe)) {
 
@@ -538,5 +567,7 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener {
 		new CADFrame().setVisible(true);
 
 	}
+
+	
 
 }
