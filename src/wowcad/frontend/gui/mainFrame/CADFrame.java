@@ -33,7 +33,9 @@ import wowcad.frontend.gui.dialogs.NewDrawingDialog;
 import wowcad.frontend.gui.dialogs.PointDialog;
 import wowcad.frontend.gui.dialogs.PolygonDialog;
 import wowcad.frontend.gui.dialogs.PolylineDialog;
+import wowcad.frontend.gui.dialogs.RemoveDialog;
 import wowcad.frontend.gui.dialogs.RotateDialog;
+import wowcad.frontend.gui.dialogs.ScaleDialog;
 import wowcad.frontend.gui.dialogs.SegmentDialog;
 import wowcad.frontend.gui.dialogs.TranslateDialog;
 import wowcad.frontend.gui.drawer.DrawingRegion;
@@ -523,6 +525,29 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 		rD.setVisible(true);
 	}
 	
+	public void performScale() {
+		ScaleDialog sD = new ScaleDialog(this, this, drawingRegion.getShapesNames());
+		sD.setVisible(true);
+	}
+	
+	public void performRemove() {
+		RemoveDialog rD = new RemoveDialog(this, this, drawingRegion.getShapesNames());
+		rD.setVisible(true);
+	}
+	
+	
+	/**
+	 * Bottom ribbon
+	 */
+	public void performExecute() {
+		try {
+			drawingRegion.applyCommand(txtCommand.getText());
+			txtCommand.setText("");
+		} catch (Exception e) {
+			showException(e);
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent aE) {
 		if(aE.getSource().equals(itemNew)) {
@@ -571,13 +596,13 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 			performRotate();
 		}
 		else if(aE.getSource().equals(itemScale) || aE.getSource().equals(btnScale)) {
-
+			performScale();
 		}
 		else if(aE.getSource().equals(itemRemove)) {
-			
+			performRemove();
 		}
 		else if(aE.getSource().equals(btnExe)) {
-
+			performExecute();
 		}
 		else if(aE.getSource().equals(btnHelp)) {
 			//Command help
