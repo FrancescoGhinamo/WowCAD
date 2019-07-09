@@ -26,6 +26,7 @@ import wowcad.backend.beam.cadManager.CadManager;
 import wowcad.backend.beam.cadManager.CommandKeys;
 import wowcad.backend.beam.cadManager.exceptions.UnsavedException;
 import wowcad.backend.beam.drawing.Drawing;
+import wowcad.frontend.gui.dialogs.CircleDialog;
 import wowcad.frontend.gui.dialogs.EllipseDialog;
 import wowcad.frontend.gui.dialogs.ExportDialog;
 import wowcad.frontend.gui.dialogs.NewDrawingDialog;
@@ -499,6 +500,12 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 		eD.setVisible(true);
 	}
 	
+	public void performInsertCircle() {
+		CircleDialog cD = new CircleDialog(this, this);
+		drawingRegion.getDrawingCanvas().setcRec(cD);
+		cD.setVisible(true);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent aE) {
 		if(aE.getSource().equals(itemNew)) {
@@ -538,7 +545,7 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 			performInsertEllipse();
 		}
 		else if(aE.getSource().equals(itemCircle) || aE.getSource().equals(btnCircle)) {
-
+			performInsertCircle();
 		}
 		else if(aE.getSource().equals(itemTranslate) || aE.getSource().equals(btnTranslate)) {
 
