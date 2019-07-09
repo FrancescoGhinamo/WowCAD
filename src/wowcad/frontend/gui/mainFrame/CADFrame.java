@@ -34,6 +34,7 @@ import wowcad.frontend.gui.dialogs.PointDialog;
 import wowcad.frontend.gui.dialogs.PolygonDialog;
 import wowcad.frontend.gui.dialogs.PolylineDialog;
 import wowcad.frontend.gui.dialogs.SegmentDialog;
+import wowcad.frontend.gui.dialogs.TranslateDialog;
 import wowcad.frontend.gui.drawer.DrawingRegion;
 
 /**
@@ -506,6 +507,15 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 		cD.setVisible(true);
 	}
 	
+	
+	/**
+	 * Edit menu functions
+	 */
+	public void performTranslate() {
+		TranslateDialog tD = new TranslateDialog(this, this, drawingRegion.getShapesNames());
+		tD.setVisible(true);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent aE) {
 		if(aE.getSource().equals(itemNew)) {
@@ -548,7 +558,7 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 			performInsertCircle();
 		}
 		else if(aE.getSource().equals(itemTranslate) || aE.getSource().equals(btnTranslate)) {
-
+			performTranslate();
 		}
 		else if(aE.getSource().equals(itemRotate) || aE.getSource().equals(btnRotate)) {
 

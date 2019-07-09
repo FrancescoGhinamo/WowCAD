@@ -280,6 +280,10 @@ public class CadManager {
 						break;
 
 					case CommandKeys.TRANSLATE:
+						/*
+						 * parameters:
+						 * <primitiveName>,<deltaX>,<deltaY>
+						 */
 						parseTranslate(parts[1]);
 						break;
 

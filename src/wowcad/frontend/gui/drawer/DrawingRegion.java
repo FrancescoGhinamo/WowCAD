@@ -2,6 +2,7 @@ package wowcad.frontend.gui.drawer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.Set;
 
 import javax.swing.JPanel;
 
@@ -135,6 +136,18 @@ public class DrawingRegion extends JPanel {
 
 	public DrawingCanvas getDrawingCanvas() {
 		return drawingCanvas;
+	}
+	
+	public String[] getShapesNames() {
+		Set<String> names = cadManager.getDrawing().getPrimitives().keySet();
+		String[] ris = new String[names.size()];
+		int i = 0;
+		for(String s: names) {
+			ris[i] = s;
+			i++;
+		}
+		
+		return ris;
 	}
 
 
