@@ -26,6 +26,7 @@ import wowcad.backend.beam.cadManager.CadManager;
 import wowcad.backend.beam.cadManager.CommandKeys;
 import wowcad.backend.beam.cadManager.exceptions.UnsavedException;
 import wowcad.backend.beam.drawing.Drawing;
+import wowcad.frontend.gui.dialogs.EllipseDialog;
 import wowcad.frontend.gui.dialogs.ExportDialog;
 import wowcad.frontend.gui.dialogs.NewDrawingDialog;
 import wowcad.frontend.gui.dialogs.PointDialog;
@@ -492,6 +493,12 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 		pD.setVisible(true);
 	}
 	
+	public void performInsertEllipse() {
+		EllipseDialog eD = new EllipseDialog(this, this);
+		drawingRegion.getDrawingCanvas().setcRec(eD);
+		eD.setVisible(true);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent aE) {
 		if(aE.getSource().equals(itemNew)) {
@@ -528,7 +535,7 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 			performInsertPolygon();
 		}
 		else if(aE.getSource().equals(itemEllipse) || aE.getSource().equals(btnEllipse)) {
-
+			performInsertEllipse();
 		}
 		else if(aE.getSource().equals(itemCircle) || aE.getSource().equals(btnCircle)) {
 
