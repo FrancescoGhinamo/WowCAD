@@ -7,8 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -45,7 +43,7 @@ import wowcad.frontend.gui.drawer.DrawingRegion;
  * @author franc
  *
  */
-public class CADFrame extends JFrame implements ActionListener, MouseListener, DialogCallback {
+public class CADFrame extends JFrame implements ActionListener, DialogCallback {
 
 
 	private static final long serialVersionUID = -158826047285841843L;
@@ -610,39 +608,6 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 
 
 	}
-
-
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 
 
 	public static void main(String[] args) {
