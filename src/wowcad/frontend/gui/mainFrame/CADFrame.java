@@ -33,6 +33,7 @@ import wowcad.frontend.gui.dialogs.NewDrawingDialog;
 import wowcad.frontend.gui.dialogs.PointDialog;
 import wowcad.frontend.gui.dialogs.PolygonDialog;
 import wowcad.frontend.gui.dialogs.PolylineDialog;
+import wowcad.frontend.gui.dialogs.RotateDialog;
 import wowcad.frontend.gui.dialogs.SegmentDialog;
 import wowcad.frontend.gui.dialogs.TranslateDialog;
 import wowcad.frontend.gui.drawer.DrawingRegion;
@@ -516,6 +517,12 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 		tD.setVisible(true);
 	}
 	
+	public void performRotate() {
+		RotateDialog rD = new RotateDialog(this, this, drawingRegion.getShapesNames());
+		drawingRegion.getDrawingCanvas().setcRec(rD);
+		rD.setVisible(true);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent aE) {
 		if(aE.getSource().equals(itemNew)) {
@@ -561,7 +568,7 @@ public class CADFrame extends JFrame implements ActionListener, MouseListener, D
 			performTranslate();
 		}
 		else if(aE.getSource().equals(itemRotate) || aE.getSource().equals(btnRotate)) {
-
+			performRotate();
 		}
 		else if(aE.getSource().equals(itemScale) || aE.getSource().equals(btnScale)) {
 
