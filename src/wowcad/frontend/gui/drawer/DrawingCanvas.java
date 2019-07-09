@@ -408,16 +408,23 @@ public class DrawingCanvas extends JLabel implements Observer, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int rawX = e.getX();
-		int rawT = e.getY();
+		int rawY = e.getY();
 		
 		//x component
 		double fX = rawX;
+		fX /= scale;
+		fX -= transX;
 		fX -= this.getWidth() / 2;
 		fX /= redFact;
 		
 		
 		//y component
-		double fY = 0;
+		double fY = rawY;
+		fY /= scale;
+		fY = this.getHeight() - fY;		
+		fY -= transY;
+		fY -= this.getHeight() / 2;
+		fY /= redFact;
 		
 		
 		if(cRec != null) {
