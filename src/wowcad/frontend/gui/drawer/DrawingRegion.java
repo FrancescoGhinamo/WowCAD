@@ -71,6 +71,7 @@ public class DrawingRegion extends JPanel {
 	 */
 	public void openDrawing(String source, boolean force) throws UnsavedException, Exception {
 		cadManager.openDrawing(source, force);
+		drawingCanvas.update(cadManager.getDrawing(), null);
 	}
 	
 	/**
@@ -119,6 +120,8 @@ public class DrawingRegion extends JPanel {
 			throw e;
 		}
 	}
+	
+	
 	
 	public void sendAction(ActionCommand cmd) {
 		drawingCanvas.parseAction(cmd);
