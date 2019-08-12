@@ -27,6 +27,7 @@ import wowcad.backend.beam.drawing.Drawing;
 import wowcad.frontend.gui.dialogs.CircleDialog;
 import wowcad.frontend.gui.dialogs.EllipseDialog;
 import wowcad.frontend.gui.dialogs.ExportDialog;
+import wowcad.frontend.gui.dialogs.HelpDialog;
 import wowcad.frontend.gui.dialogs.NewDrawingDialog;
 import wowcad.frontend.gui.dialogs.PointDialog;
 import wowcad.frontend.gui.dialogs.PolygonDialog;
@@ -546,6 +547,10 @@ public class CADFrame extends JFrame implements ActionListener, DialogCallback {
 		}
 	}
 	
+	public void performHelp() {
+		new HelpDialog(this, false).setVisible(true);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent aE) {
 		if(aE.getSource().equals(itemNew)) {
@@ -602,8 +607,8 @@ public class CADFrame extends JFrame implements ActionListener, DialogCallback {
 		else if(aE.getSource().equals(btnExe)) {
 			performExecute();
 		}
-		else if(aE.getSource().equals(btnHelp)) {
-			//Command help
+		else if(aE.getSource().equals(btnHelp) || aE.getSource().equals(itemHelp)) {
+			performHelp();
 		}
 
 

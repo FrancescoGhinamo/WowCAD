@@ -1,16 +1,7 @@
 package testing;
 
-import java.io.File;
-import java.io.IOException;
 
 import wowcad.backend.beam.cadManager.CadManager;
-import wowcad.backend.beam.drawing.Drawing;
-import wowcad.backend.beam.drawing.JPEGExporter;
-import wowcad.backend.beam.shapes.Ellipse;
-import wowcad.backend.beam.shapes.Point;
-import wowcad.backend.beam.shapes.Polygon;
-import wowcad.backend.beam.shapes.Polyline;
-import wowcad.backend.beam.shapes.Segment;
 
 public class Testing {
 

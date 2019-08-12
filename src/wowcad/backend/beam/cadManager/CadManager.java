@@ -235,7 +235,7 @@ public class CadManager {
 					case CommandKeys.NAME:
 						/*
 						 * parameters:
-						 * <newNamen>
+						 * <newName>
 						 */
 						parseName(parts[1]);
 						break;
