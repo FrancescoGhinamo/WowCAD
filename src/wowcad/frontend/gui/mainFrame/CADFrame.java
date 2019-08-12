@@ -247,52 +247,52 @@ public class CADFrame extends JFrame implements ActionListener, DialogCallback {
 	private JPanel initRibbon() {
 		JPanel ribbon = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		ribbon.setBackground(Color.BLACK);
-		btnPoint = new JButton("Poi");
+		btnPoint = new JButton("Point");
 		btnPoint.setBackground(Color.BLACK);
 		btnPoint.setForeground(Color.WHITE);
 		btnPoint.addActionListener(this);
 
-		btnSegment = new JButton("Segm");
+		btnSegment = new JButton("Segment");
 		btnSegment.setBackground(Color.BLACK);
 		btnSegment.setForeground(Color.WHITE);
 		btnSegment.addActionListener(this);
 
-		btnPolyline = new JButton("PolLn");
+		btnPolyline = new JButton("Polyline");
 		btnPolyline.setBackground(Color.BLACK);
 		btnPolyline.setForeground(Color.WHITE);
 		btnPolyline.addActionListener(this);
 
-		btnPolygon = new JButton("PolGon");
+		btnPolygon = new JButton("Polygon");
 		btnPolygon.setBackground(Color.BLACK);
 		btnPolygon.setForeground(Color.WHITE);
 		btnPolygon.addActionListener(this);
 
-		btnEllipse = new JButton("Ell");
+		btnEllipse = new JButton("Ellipse");
 		btnEllipse.setBackground(Color.BLACK);
 		btnEllipse.setForeground(Color.WHITE);
 		btnEllipse.addActionListener(this);
 
-		btnCircle = new JButton("Cir");
+		btnCircle = new JButton("Circle");
 		btnCircle.setBackground(Color.BLACK);
 		btnCircle.setForeground(Color.WHITE);
 		btnCircle.addActionListener(this);
 
-		btnTranslate = new JButton("Tans");
+		btnTranslate = new JButton("Tanslate");
 		btnTranslate.setBackground(Color.BLACK);
 		btnTranslate.setForeground(Color.WHITE);
 		btnTranslate.addActionListener(this);
 
-		btnRotate = new JButton("Rot");
+		btnRotate = new JButton("Rotate");
 		btnRotate.setBackground(Color.BLACK);
 		btnRotate.setForeground(Color.WHITE);
 		btnRotate.addActionListener(this);
 
-		btnScale = new JButton("Scal");
+		btnScale = new JButton("Scale");
 		btnScale.setBackground(Color.BLACK);
 		btnScale.setForeground(Color.WHITE);
 		btnScale.addActionListener(this);
 
-		btnExport = new JButton("Exp");
+		btnExport = new JButton("Export");
 		btnExport.setBackground(Color.BLACK);
 		btnExport.setForeground(Color.WHITE);
 		btnExport.addActionListener(this);
