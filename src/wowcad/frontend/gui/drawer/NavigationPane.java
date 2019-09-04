@@ -107,7 +107,7 @@ public class NavigationPane extends JPanel implements ActionListener {
 		btnMvLeft.setForeground(Color.WHITE);
 		btnMvLeft.addActionListener(this);
 		
-		btnMvDwn = new JButton("|");
+		btnMvDwn = new JButton("\\/");
 		btnMvDwn.setBackground(Color.BLACK);
 		btnMvDwn.setForeground(Color.WHITE);
 		btnMvDwn.addActionListener(this);
